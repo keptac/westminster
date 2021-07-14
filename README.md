@@ -50,11 +50,10 @@ material-react-dashboard
 
 
 ## Reporting Issues:
-
-- [Github Issues Page](https://github.com/devias-io/react-material-dashboard/issues?ref=devias-io)
+- [Github Issues Page](https://github.com/keptac/school-management-frontend/issues)
+- [Email Developer Keptac](mailto:keptac.dev@gmail.com)
 
 ## Contact Us
 
-- Email Us: keptac.dev@gmail.com
-- Email Us: keptac.dev@gmail.com
+- Email Us: support@techvividholdings.com
 - [Follow us on Instagram](https://www.instagram.com/techvivid/)
