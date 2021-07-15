@@ -15,9 +15,9 @@ import {
   Lock as LockIcon,
   File as ProgressReport,
   BookOpen as Library,
-  Video as VideoClass,
   MessageCircle as UsersIcon
 } from 'react-feather';
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import NavItem from '../NavItem';
 
 const user = {
@@ -39,7 +39,7 @@ const items = [
   },
   {
     href: '/student/virtual-class',
-    icon: VideoClass,
+    icon: OndemandVideoIcon,
     title: 'Virtual Class'
   },
   {
