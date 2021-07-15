@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from 'src/components/DashboardLayout';
+import StudentDashboardLayout from 'src/components/student/StudentDashboardLayout';
+
 import MainLayout from 'src/components/MainLayout';
 
 // Pages
@@ -7,65 +8,57 @@ import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 
-import Account from 'src/pages/super-admin/Account';
-import CustomerList from 'src/pages/student/CustomerList';
+import Account from 'src/pages/student/Account';
+import Chat from 'src/pages/student/Chat';
 import Dashboard from 'src/pages/student/Dashboard';
-import ProductList from 'src/pages/student/ProductList';
-import Settings from 'src/pages/student/Settings';
+import Library from 'src/pages/student/Library';
+import VirtualClass from 'src/pages/student/VirtualClass';
+import ProgressReport from './pages/student/ProgressReport';
 
 const routes = [
-  // Super Admin Routes
-  {
-    path: 'app',
-    element: <DashboardLayout />,
-    children: [
-      { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
-      { path: 'settings', element: <Settings /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
-  },
   // Student Routes
   {
     path: 'student',
-    element: <DashboardLayout />,
+    element: <StudentDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
+      { path: 'chat', element: <Chat /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
-      { path: 'settings', element: <Settings /> },
+      { path: 'library', element: <Library /> },
+      { path: 'virtual-class', element: <VirtualClass /> },
+      { path: 'report', element: <ProgressReport /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
+
   // Teacher Routes
   {
     path: 'teacher',
-    element: <DashboardLayout />,
+    element: <StudentDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
-      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
   // School Admin Routes
   {
     path: 'school-admin',
-    element: <DashboardLayout />,
+    element: <StudentDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
-      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
+  // Super Admin Routes
+  {
+    path: 'app',
+    element: <StudentDashboardLayout />,
+    children: [
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
+  // Default Routes
   {
     path: '/',
     element: <MainLayout />,

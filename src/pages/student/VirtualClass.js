@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import SettingsNotifications from 'src/components/settings/SettingsNotifications';
-import SettingsPassword from 'src/components/settings/SettingsPassword';
+import SettingsNotifications from 'src/components/student/settings/SettingsNotifications';
+import SettingsPassword from 'src/components/student/settings/SettingsPassword';
 
-const SettingsView = () => (
+const VirtualClass = () => (
   <>
     <Helmet>
-      <title>Settings | Material Kit</title>
+      <title>Settings | Vivid Learn</title>
     </Helmet>
     <Box
       sx={{
@@ -25,4 +25,4 @@ const SettingsView = () => (
   </>
 );
 
-export default SettingsView;
+export default VirtualClass;

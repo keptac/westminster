@@ -4,19 +4,19 @@ import {
   Container,
   Grid
 } from '@material-ui/core';
-import Budget from 'src/components/dashboard//Budget';
-import LatestOrders from 'src/components/dashboard//LatestOrders';
-import LatestProducts from 'src/components/dashboard//LatestProducts';
-import Sales from 'src/components/dashboard//Sales';
-import TasksProgress from 'src/components/dashboard//TasksProgress';
-import TotalCustomers from 'src/components/dashboard//TotalCustomers';
-import TotalProfit from 'src/components/dashboard//TotalProfit';
-import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
+import Budget from 'src/components/student/student/dashboard/Topcard';
+import LatestOrders from 'src/components/student/student/dashboard/LatestOrders';
+import LatestProducts from 'src/components/student/student/dashboard/LatestProducts';
+import Sales from 'src/components/student/student/dashboard/Sales';
+import TasksProgress from 'src/components/student/student/dashboard/TasksProgress';
+import TotalCustomers from 'src/components/student/student/dashboard/TotalCustomers';
+import TotalProfit from 'src/components/student/student/dashboard/TotalProfit';
+import TrafficByDevice from 'src/components/student/student/dashboard/TrafficByDevice';
 
 const Dashboard = () => (
   <>
     <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>Dashboard | Vivid Learn</title>
     </Helmet>
     <Box
       sx={{

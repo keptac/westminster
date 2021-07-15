@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
-import DashboardNavbar from './DashboardNavbar';
+import DashboardNavbar from '../DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
-const DashboardLayoutRoot = experimentalStyled('div')(
+const StudentDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -14,7 +14,7 @@ const DashboardLayoutRoot = experimentalStyled('div')(
   })
 );
 
-const DashboardLayoutWrapper = experimentalStyled('div')(
+const StudentDashboardLayoutWrapper = experimentalStyled('div')(
   ({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',
@@ -26,37 +26,37 @@ const DashboardLayoutWrapper = experimentalStyled('div')(
   })
 );
 
-const DashboardLayoutContainer = experimentalStyled('div')({
+const StudentDashboardLayoutContainer = experimentalStyled('div')({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden'
 });
 
-const DashboardLayoutContent = experimentalStyled('div')({
+const StudentDashboardLayoutContent = experimentalStyled('div')({
   flex: '1 1 auto',
   height: '100%',
   overflow: 'auto'
 });
 
-const DashboardLayout = () => {
+const StudentDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <DashboardLayoutRoot>
+    <StudentDashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <DashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
-      <DashboardLayoutWrapper>
-        <DashboardLayoutContainer>
-          <DashboardLayoutContent>
+      <StudentDashboardLayoutWrapper>
+        <StudentDashboardLayoutContainer>
+          <StudentDashboardLayoutContent>
             <Outlet />
-          </DashboardLayoutContent>
-        </DashboardLayoutContainer>
-      </DashboardLayoutWrapper>
-    </DashboardLayoutRoot>
+          </StudentDashboardLayoutContent>
+        </StudentDashboardLayoutContainer>
+      </StudentDashboardLayoutWrapper>
+    </StudentDashboardLayoutRoot>
   );
 };
 
-export default DashboardLayout;
+export default StudentDashboardLayout;

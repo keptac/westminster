@@ -4,13 +4,13 @@ import {
   Container,
   Grid
 } from '@material-ui/core';
-import AccountProfile from 'src/components/account/AccountProfile';
-import AccountProfileDetails from 'src/components/account/AccountProfileDetails';
+import AccountProfile from 'src/components/student/account/AccountProfile';
+import AccountProfileDetails from 'src/components/student/account/AccountProfileDetails';
 
 const Account = () => (
   <>
     <Helmet>
-      <title>Account | Material Kit</title>
+      <title>Account | Vivid Learn</title>
     </Helmet>
     <Box
       sx={{

@@ -1,13 +1,13 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import CustomerListResults from 'src/components/customer/CustomerListResults';
-import CustomerListToolbar from 'src/components/customer/CustomerListToolbar';
+import CustomerListResults from 'src/components/student/customer/CustomerListResults';
+import CustomerListToolbar from 'src/components/student/customer/CustomerListToolbar';
 import customers from 'src/__mocks__/customers';
 
-const CustomerList = () => (
+const Chat = () => (
   <>
     <Helmet>
-      <title>Customers | Material Kit</title>
+      <title>Chat | Vivid Learn</title>
     </Helmet>
     <Box
       sx={{
@@ -26,4 +26,4 @@ const CustomerList = () => (
   </>
 );
 
-export default CustomerList;
+export default Chat;

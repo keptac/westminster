@@ -5,14 +5,14 @@ import {
   Grid,
   Pagination
 } from '@material-ui/core';
-import ProductListToolbar from 'src/components/product/ProductListToolbar';
-import ProductCard from 'src/components/product//ProductCard';
-import products from 'src/__mocks__/products';
+import ProductListToolbar from 'src/components/student/product/ProductListToolbar';
+import ProductCard from 'src/components/student/product//ProductCard';
+import products from 'src/__mocks__/resources';
 
 const ProductList = () => (
   <>
     <Helmet>
-      <title>Products | Material Kit</title>
+      <title>Products | Vivid Learn</title>
     </Helmet>
     <Box
       sx={{
