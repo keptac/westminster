@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 
 import LibraryCard from 'src/components/student/library/LibraryCard';
+import LibraryToolBar from 'src/components/student/library/LibraryToolbar';
 import resources from 'src/__mocks__/resources';
 
 const Library = () => (
@@ -22,6 +23,7 @@ const Library = () => (
       }}
     >
       <Container maxWidth={false}>
+        <LibraryToolBar />
         <Box sx={{ pt: 3 }}>
           <Grid
             container

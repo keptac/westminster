@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
 import * as React from 'react';
-// import { darken, fade, lighten } from '@material-ui/core/styles/colorManipulator';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
   Paper,

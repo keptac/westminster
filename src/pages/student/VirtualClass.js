@@ -29,7 +29,7 @@ const VirtualClass = () => (
         <Card>
           <CardHeader
             subheader="Ongoing sessions"
-            title="Video Classes"
+            title="Live Video Classes"
           />
           <Divider />
           <CardContent>
