@@ -14,6 +14,7 @@ import Dashboard from 'src/pages/student/Dashboard';
 import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
 import ProgressReport from './pages/student/ProgressReport';
+import SubjectContent from './pages/student/SubjectContent';
 
 const routes = [
   // Student Routes
@@ -27,6 +28,7 @@ const routes = [
       { path: 'library', element: <Library /> },
       { path: 'virtual-class', element: <VirtualClass /> },
       { path: 'report', element: <ProgressReport /> },
+      { path: 'subject', element: <SubjectContent /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

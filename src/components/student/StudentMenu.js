@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import moment from 'moment';
+
 import {
   Card,
   CardHeader,
@@ -14,25 +14,26 @@ import {
 const products = [
   {
     id: uuid(),
-    name: 'General',
+    name: 'Resources',
     imageUrl: '/static/images/resources/mtgs.png',
-    updatedAt: moment().subtract(2, 'hours'),
-    message: 'Schools will be open during th metioned times'
   },
   {
     id: uuid(),
-    name: 'Public Notice',
+    name: 'Homeworks',
     imageUrl: '/static/images/resources/mtgs.png',
-    updatedAt: moment().subtract(3, 'hours'),
-    message: 'Schools will be open during th metioned times such as these'
   },
+  {
+    id: uuid(),
+    name: 'Tests',
+    imageUrl: '/static/images/resources/mtgs.png',
+  }
 ];
 
 const MenuBoard = (props) => (
   <Card {...props}>
     <CardHeader
       subtitle={`${products.length} in total`}
-      title="Notice Board"
+      title="Class Menu"
     />
     <Divider />
     <List>
@@ -53,7 +54,6 @@ const MenuBoard = (props) => (
           </ListItemAvatar>
           <ListItemText
             primary={announcement.name}
-            secondary={`Updated ${announcement.message}`}
           />
         </ListItem>
       ))}
