@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import { Helmet } from 'react-helmet';
 import {
   Box,
@@ -11,7 +12,7 @@ import React from 'react';
 import resources from 'src/__mocks__/subjectResources';
 
 const subject = 'Shona';
-const siteName = ' | VividLearn ';
+const siteName = ' | Vivid Learn ';
 
 class SubjectContent extends React.Component {
   constructor(props) {

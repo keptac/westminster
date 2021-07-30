@@ -7,11 +7,29 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import LaunchIcon from '@material-ui/icons/Launch';
 import React from 'react';
 
 class Subjectscard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // browseTo: {}
+    };
+  }
+
+  componentDidMount() {
+    // const { _subjectData } = this.props;
+    this.setState({
+      // browseTo: {
+      //   pathname: '/student/subject',
+      //   subjectDetails: _subjectData
+      // }
+    });
+  }
+
   render() {
     const { subjectData } = this.props;
     return (
@@ -47,7 +65,14 @@ class Subjectscard extends React.Component {
                   width: 56
                 }}
               >
-                <LaunchIcon />
+                <Link
+                  to={{
+                    pathname: '/student/subject',
+                    subjectDetails: subjectData
+                  }}
+                >
+                  <LaunchIcon />
+                </Link>
               </Avatar>
             </Grid>
           </Grid>
