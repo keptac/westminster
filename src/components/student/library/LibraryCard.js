@@ -6,7 +6,9 @@ import {
   CardContent,
   Divider,
   Grid,
-  Typography
+  Typography,
+  Tooltip,
+  Fade
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Visibility from '@material-ui/icons/Visibility';
@@ -82,16 +84,21 @@ const LibraryCard = ({ resource, ...rest }) => (
             display: 'flex'
           }}
         >
-          <Visibility color="default" />
-          <Typography
-            color="#00796b"
-            display="inline"
-            sx={{ pl: 1 }}
-            variant="body2"
-          >
-            Read Now
-          </Typography>
+          <a href="#">
+            <Tooltip title={`Open and read ${resource.title}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Visibility color="default" />
+            </Tooltip>
+            {/* <Typography
+              color="#00796b"
+              display="inline"
+              sx={{ pl: 1 }}
+              variant="body2"
+            >
+              Read Now
+            </Typography> */}
+          </a>
         </Grid>
+
       </Grid>
     </Box>
   </Card>
