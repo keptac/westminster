@@ -64,5 +64,8 @@
   },
   "devDependencies": {
     "eslint-config-airbnb": "^18.2.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "2.3.1"
   }
 }
