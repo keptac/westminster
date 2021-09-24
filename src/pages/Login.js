@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login | Vivid Learn</title>
+        <title>Login | Westminster</title>
       </Helmet>
       <Box
         sx={{
@@ -31,7 +31,7 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'dev@techvividholdings.com',
+              email: 'dev@westminster.com',
               password: 'pass@123'
             }}
             validationSchema={Yup.object().shape({
@@ -43,7 +43,7 @@ const Login = () => {
             })}
             onSubmit={() => {
               // Check the user role and navigate accordingly
-              navigate('/student/dashboard', { replace: true });
+              navigate('/teacher/dashboard', { replace: true });
             }}
           >
             {({
@@ -58,14 +58,14 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" variant="h2">
-                    Sign in
+                    Westmister International School
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Sign in to vividlearn
+                    Sign in
                   </Typography>
                 </Box>
 

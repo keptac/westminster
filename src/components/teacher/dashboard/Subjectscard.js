@@ -24,7 +24,7 @@ class Subjectscard extends React.Component {
     // const { _subjectData } = this.props;
     this.setState({
       // browseTo: {
-      //   pathname: '/student/subject',
+      //   pathname: '/teacher/subject',
       //   subjectDetails: _subjectData
       // }
     });
@@ -67,8 +67,8 @@ class Subjectscard extends React.Component {
               >
                 <Link
                   to={{
-                    pathname: '/student/subject',
-                    subjectDetails: subjectData
+                    pathname: '/teacher/subject',
+                    state: subjectData
                   }}
                 >
                   <LaunchIcon />

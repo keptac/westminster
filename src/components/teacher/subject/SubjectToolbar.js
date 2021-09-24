@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
 
-const LibraryToolBar = (props) => (
+const SubjectToolBar = (props) => (
   <Box {...props}>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -38,4 +38,4 @@ const LibraryToolBar = (props) => (
   </Box>
 );
 
-export default LibraryToolBar;
+export default SubjectToolBar;

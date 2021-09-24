@@ -4,108 +4,135 @@ import {
   Container,
   Grid
 } from '@material-ui/core';
-import Budget from 'src/components/student/student/dashboard/Topcard';
-import LatestOrders from 'src/components/student/student/dashboard/LatestOrders';
-import LatestProducts from 'src/components/student/student/dashboard/LatestProducts';
-import Sales from 'src/components/student/student/dashboard/Sales';
-import TasksProgress from 'src/components/student/student/dashboard/TasksProgress';
-import TotalCustomers from 'src/components/student/student/dashboard/TotalCustomers';
-import TotalProfit from 'src/components/student/student/dashboard/TotalProfit';
-import TrafficByDevice from 'src/components/student/student/dashboard/TrafficByDevice';
 
-const Dashboard = () => (
-  <>
-    <Helmet>
-      <title>Dashboard | Vivid Learn</title>
-    </Helmet>
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        minHeight: '100%',
-        py: 3
-      }}
-    >
-      <Container maxWidth={false}>
-        <Grid
-          container
-          spacing={3}
+import NoticeBoard from 'src/components/NoticeBoard';
+import SubjectCard from 'src/components/teacher/subject/SubjectCard';
+import React from 'react';
+
+import StudentServices from '../../services/teacher';
+
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      subjectData: []
+    };
+  }
+
+  // getAssignments = () => {
+  //   StudentService.getAssignments(this.state.assignment.classId)
+  //     .then((response) => {
+  //       this.setState({ assignments: response }, () => {
+  //         let pages = [];
+  //         let perPage = 5;
+  //         const totalPageCount = Math.ceil(
+  //           this.state.assignments.length / perPage
+  //         );
+
+  //         for (var i = 1; i <= totalPageCount; i++) {
+  //           pages.push(i);
+  //         }
+
+  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
+  //           currentPageNumber: this.state.currentPageNumber,
+  //           perPage,
+  //         });
+  //         this.setState({ pages, assignments_ });
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       M.toast({
+  //         html: "Failed to find assignment folder",
+  //         classes: "red accent-2",
+  //       });
+  //       console.log(error);
+  //     });
+  // };
+
+  componentDidMount() {
+    // this.getDashData();
+
+    this.setState({
+      subjectData: [
+        {
+          subjectName: 'Mathematics', subjectCode: 'SUB123', class: 'Four', studentCount: 5, classId: 'CLM123', level: 'GCSE', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
+        },
+        {
+          subjectName: 'Mathematics', subjectCode: 'SUB124', class: 'Two', studentCount: 15, classId: 'CLM124', level: 'AS', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
+        }
+      ]
+    });
+  }
+
+  getDashData() {
+    // const studentData = JSON.parse(localStorage.getItem('userAll'));
+    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
+    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+      .then((response) => {
+        this.setState({ subjectData: response });
+      });
+  }
+
+  render() {
+    const { subjectData } = this.state;
+    return (
+      <>
+        <Helmet>
+          <title>Dashboard</title>
+        </Helmet>
+        <Box
+          sx={{
+            backgroundColor: 'background.default',
+            minHeight: '100%',
+            py: 3
+          }}
         >
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <Budget />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TotalCustomers />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TasksProgress />
-          </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <TotalProfit sx={{ height: '100%' }} />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <Sales />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <TrafficByDevice sx={{ height: '100%' }} />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts sx={{ height: '100%' }} />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <LatestOrders />
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  </>
-);
+          <Container maxWidth={false}>
+            <Grid
+              container
+              spacing={3}
+              sx={{ marginTop: '0.1%' }}
+            >
+              <Grid
+                item
+                lg={8}
+                md={12}
+                xl={9}
+                xs={12}
+              >
 
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  {subjectData.map((resource) => (
+                    <Grid
+                      item
+                      key={resource.id}
+                      lg={6}
+                      md={6}
+                      xs={12}
+                    >
+                      <SubjectCard resource={resource} />
+                    </Grid>
+
+                  ))}
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                lg={4}
+                md={6}
+                xl={3}
+                xs={12}
+              >
+                <NoticeBoard sx={{ height: '100%' }} />
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      </>
+    );
+  }
+}
 export default Dashboard;

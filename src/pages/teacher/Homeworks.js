@@ -7,8 +7,7 @@ import {
 
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
-import MenuBoard from 'src/components/student/StudentMenu';
-import LibraryCard from 'src/components/student/library/LibraryCard';
+import MenuBoard from 'src/components/teacher/StudentMenu';
 import React from 'react';
 import resources from 'src/__mocks__/subjectResources';
 
@@ -95,10 +94,11 @@ class SubjectContent extends React.Component {
                         xs={12}
                       >
                         <div onClick={() => this.readDocument()} aria-hidden="true">
-                          <LibraryCard resource={resource} />
+                          <SubjectContent resource={resource} />
                         </div>
                       </Grid>
                     ))}
+
                   </Grid>
 
                   <Grid
