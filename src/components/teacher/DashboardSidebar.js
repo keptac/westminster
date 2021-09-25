@@ -79,7 +79,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/teacher/account"
+          to="/teacher/dasshboard"
         />
         <Typography
           color="textPrimary"
