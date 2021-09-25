@@ -2,7 +2,7 @@ const Logo = (props) => (
   <img
     height="50"
     alt="Logo"
-    src="/static/mtgs.jpeg"
+    src="/static/westminster.png"
     {...props}
   />
 );

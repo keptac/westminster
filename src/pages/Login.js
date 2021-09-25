@@ -10,10 +10,10 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
-
   return (
     <>
       <Helmet>
@@ -28,10 +28,22 @@ const Login = () => {
           justifyContent: 'center'
         }}
       >
+        <Container
+          sx={{
+            backgroundColor: 'background.default',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '10%',
+            justifyContent: 'center',
+            width: '6%'
+          }}
+        >
+          <Logo />
+        </Container>
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'dev@westminster.com',
+              email: 'kelvin@westminster.com',
               password: 'pass@123'
             }}
             validationSchema={Yup.object().shape({
@@ -41,8 +53,11 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
+            onSubmit={(values) => {
               // Check the user role and navigate accordingly
+              sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
+              sessionStorage.setItem('loggedUser', values.email);
+              sessionStorage.setItem('loggedUserRole', 'Staff');
               navigate('/teacher/dashboard', { replace: true });
             }}
           >
