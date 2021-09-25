@@ -15,14 +15,14 @@ const products = [
   {
     id: uuid(),
     name: 'General',
-    imageUrl: '/static/images/resources/mtgs.png',
+    imageUrl: '/static/images/resources/westminster.png',
     updatedAt: moment().subtract(2, 'hours'),
     message: 'Schools will be open during th metioned times'
   },
   {
     id: uuid(),
     name: 'Public Notice',
-    imageUrl: '/static/images/resources/mtgs.png',
+    imageUrl: '/static/images/resources/westminster.png',
     updatedAt: moment().subtract(3, 'hours'),
     message: 'Schools will be open during th metioned times such as these'
   },
