@@ -87,11 +87,11 @@ async function deleteResource(data) {
   }
 }
 
-const TeacherServices = {
+const SchoolAdminServices = {
   submitAssignment,
   getStudentSubjects,
   download,
   deleteResource,
 };
 
-export default TeacherServices;
+export default SchoolAdminServices;

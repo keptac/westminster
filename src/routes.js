@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import StudentDashboardLayout from 'src/components/teacher/StudentDashboardLayout';
+import TeacherDashboardLayout from 'src/components/teacher/TeacherDashboardLayout';
 
 import MainLayout from 'src/components/MainLayout';
 
@@ -15,12 +15,14 @@ import Dashboard from 'src/pages/teacher/Dashboard';
 import ProgressReport from './pages/teacher/ProgressReport';
 import SubjectContent from './pages/teacher/SubjectContent';
 import AddClass from './pages/teacher/Classes';
+import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
+import AdminDashboard from './pages/schooladmin/Dashboard';
 
 const routes = [
-  // Student Routes
+  // Teacher Routes
   {
     path: 'teacher',
-    element: <StudentDashboardLayout />,
+    element: <TeacherDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
       { path: 'dashboard', element: <Dashboard /> },
@@ -31,33 +33,16 @@ const routes = [
     ]
   },
 
-  // Teacher Routes
-  {
-    path: 'teacher',
-    element: <StudentDashboardLayout />,
-    children: [
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
-  },
   // School Admin Routes
   {
     path: 'school-admin',
-    element: <StudentDashboardLayout />,
+    element: <SchoolAdminDashboardLayout />,
     children: [
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'dashboard', element: <AdminDashboard /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
-  // Super Admin Routes
-  {
-    path: 'app',
-    element: <StudentDashboardLayout />,
-    children: [
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
-  },
+
   // Default Routes
   {
     path: '/',

@@ -114,7 +114,7 @@ const ProgressReport = () => {
                           color="primary"
                           variant="contained"
                         >
-                          Submit Reports
+                          Generate Reports
                         </Button>
                       </Box>
                     </Grid>

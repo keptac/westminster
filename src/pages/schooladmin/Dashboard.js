@@ -2,25 +2,37 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Container,
-  Grid
+  CardContent,
+  Card,
+  Button,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+  Badge
 } from '@material-ui/core';
-
+import moment from 'moment';
 import NoticeBoard from 'src/components/NoticeBoard';
-import SubjectCard from 'src/components/teacher/subject/SubjectCard';
+import DashboardCard from 'src/components/schoolAdmin/DashboardCard';
 import React from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import StudentServices from '../../services/teacher';
+import SchoolAdminServices from '../../services/schoolAdmin';
 
-class Dashboard extends React.Component {
+class AdminDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subjectData: []
+      subjectData: [],
+      reportData: []
     };
   }
 
   // getAssignments = () => {
-  //   StudentService.getAssignments(this.state.assignment.classId)
+  //   claseservice.getAssignments(this.state.assignment.countId)
   //     .then((response) => {
   //       this.setState({ assignments: response }, () => {
   //         let pages = [];
@@ -29,21 +41,13 @@ class Dashboard extends React.Component {
   //           this.state.assignments.length / perPage
   //         );
 
-  //         for (var i = 1; i <= totalPageCount; i++) {
-  //           pages.push(i);
-  //         }
-
-  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
-  //           currentPageNumber: this.state.currentPageNumber,
-  //           perPage,
-  //         });
   //         this.setState({ pages, assignments_ });
   //       });
   //     })
   //     .catch((error) => {
   //       M.toast({
   //         html: "Failed to find assignment folder",
-  //         classes: "red accent-2",
+  //         countes: "red accent-2",
   //       });
   //       console.log(error);
   //     });
@@ -55,30 +59,49 @@ class Dashboard extends React.Component {
     this.setState({
       subjectData: [
         {
-          subjectName: 'Mathematics', subjectCode: 'SUB123', class: 'Four', studentCount: 5, classId: 'CLM123', level: 'GCSE', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
+          name: 'Subjects', route: 'SUB123', count: 1
         },
         {
-          subjectName: 'Mathematics', subjectCode: 'SUB124', class: 'Two', studentCount: 15, classId: 'CLM124', level: 'AS', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
+          name: 'Teachers', route: 'SUB123', count: 2
+        },
+        {
+          name: 'Classes', route: 'SUB123', count: 3
+        }
+      ],
+      reportData: [
+        {
+          className: '3A', subject: 'English', classId: 'SUB123', status: 'Submitted', teacherName: 'Kelvin Chelenje', reportingPeriod: ''
+        },
+        {
+          className: '3A', subject: 'Shona', classId: 'SUB123', status: 'Pending', teacherName: 'Kelvin Chelenje', reportingPeriod: ''
         }
       ]
     });
+
+    // this.setState({
+
+    // });
   }
 
   getDashData() {
-    // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+    // const reportData = JSON.parse(localStorage.getItem('userAll'));
+    // claseservices.getclasesubjects(reportData.classId) // Get all courses by userid
+    SchoolAdminServices.getStudentSubjects('STUD128') // Get all subjects for class
       .then((response) => {
         this.setState({ subjectData: response });
+      });
+    SchoolAdminServices.getClassReportStatuses('STUD128') // Get all subjects for class
+      .then((response) => {
+        this.setState({ reportData: response });
       });
   }
 
   render() {
-    const { subjectData } = this.state;
+    const { subjectData, reportData } = this.state;
     return (
       <>
         <Helmet>
-          <title>Dashboard</title>
+          <title>Admin Dashboard</title>
         </Helmet>
         <Box
           sx={{
@@ -96,7 +119,7 @@ class Dashboard extends React.Component {
               <Grid
                 item
                 lg={8}
-                md={12}
+                md={8}
                 xl={9}
                 xs={12}
               >
@@ -109,20 +132,146 @@ class Dashboard extends React.Component {
                     <Grid
                       item
                       key={resource.id}
-                      lg={6}
+                      lg={4}
                       md={6}
                       xs={12}
                     >
-                      <SubjectCard resource={resource} />
+                      <DashboardCard resource={resource} />
                     </Grid>
 
                   ))}
+                  <Grid
+                    item
+                    lg={12}
+                    md={6}
+                    xs={12}
+                  >
+                    <Card>
+                      <CardContent>
+                        <Grid
+                          container
+                        >
+                          <Grid
+                            lg={8}
+                            md={12}
+                            xl={9}
+                            xs={12}
+                          >
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-start'
+                              }}
+                            >
+                              <Button sx={{ mx: 1 }}>
+                                Current weeks reports will be complete by 01 October 2021
+                              </Button>
+                            </Box>
+                          </Grid>
+                          <Grid
+                            lg={4}
+                            md={12}
+                            xl={9}
+                            xs={12}
+                          >
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end'
+                              }}
+                            >
+                              <Button
+                                color="primary"
+                                variant="contained"
+                              >
+                                Generate Weekly Reports
+                              </Button>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                  <Grid
+                    item
+                    lg={12}
+                    md={6}
+                    xs={12}
+                  >
+                    <Card>
+                      <CardContent>
+                        <PerfectScrollbar>
+                          <Box sx={{ minWidth: 950 }}>
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>
+                                    Class
+                                  </TableCell>
+                                  <TableCell>
+                                    Subject
+                                  </TableCell>
+                                  <TableCell>
+                                    Teacher Name
+                                  </TableCell>
+                                  <TableCell>
+                                    Weekending
+                                  </TableCell>
+                                  <TableCell>
+                                    Report Status
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {reportData.map((reportRecord) => (
+                                  <TableRow
+                                    hover
+                                    key={reportRecord.classId}
+                                  >
+                                    <TableCell>
+                                      <Box
+                                        sx={{
+                                          alignItems: 'center',
+                                          display: 'flex'
+                                        }}
+                                      >
+                                        <Typography
+                                          color="textPrimary"
+                                          variant="body1"
+                                        >
+                                          {`${reportRecord.className}` }
+                                        </Typography>
+                                      </Box>
+                                    </TableCell>
+                                    <TableCell>
+                                      {`${reportRecord.subject}`}
+                                    </TableCell>
+                                    <TableCell>
+                                      {`${reportRecord.teacherName}`}
+                                    </TableCell>
+
+                                    <TableCell>
+                                      {moment(reportRecord.createdAt).format('DD/MM/YYYY')}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge badgeContent={reportRecord.status} color={reportRecord.status === 'Submitted' ? 'success' : 'warning'} />
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </Box>
+                        </PerfectScrollbar>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+
                 </Grid>
               </Grid>
               <Grid
                 item
                 lg={4}
-                md={6}
+                md={4}
                 xl={3}
                 xs={12}
               >
@@ -135,4 +284,4 @@ class Dashboard extends React.Component {
     );
   }
 }
-export default Dashboard;
+export default AdminDashboard;

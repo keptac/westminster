@@ -9,7 +9,7 @@ import NoticeBoard from 'src/components/NoticeBoard';
 import SubjectCard from 'src/components/teacher/subject/SubjectCard';
 import React from 'react';
 
-import StudentServices from '../../services/teacher';
+import TeacherServices from '../../services/teacher';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -66,8 +66,8 @@ class Dashboard extends React.Component {
 
   getDashData() {
     // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+    // TeacherServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
+    TeacherServices.getStudentSubjects('STUD128') // Get all subjects for student
       .then((response) => {
         this.setState({ subjectData: response });
       });
