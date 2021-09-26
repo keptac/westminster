@@ -11,25 +11,6 @@ import { Search as SearchIcon } from 'react-feather';
 
 const StudentListToolbar = (props) => (
   <Box {...props}>
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'flex-end'
-      }}
-    >
-      <Button>
-        Import
-      </Button>
-      <Button sx={{ mx: 1 }}>
-        Export
-      </Button>
-      <Button
-        color="primary"
-        variant="contained"
-      >
-        Add student
-      </Button>
-    </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
         <CardContent>
@@ -48,9 +29,28 @@ const StudentListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search student"
+              placeholder="Search stusdsddent"
               variant="outlined"
             />
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <Button>
+              Import
+            </Button>
+            <Button sx={{ mx: 1 }}>
+              Export
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+            >
+              Add student
+            </Button>
           </Box>
         </CardContent>
       </Card>

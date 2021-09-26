@@ -97,7 +97,7 @@ const SubjectCard = ({ resource, ...rest }) => {
                 navigate('/teacher/report', { replace: true });
               }}
             >
-              <Tooltip title={`Add Student Assessment Marks for ${resource.name}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
                 <Visibility color="default" />
               </Tooltip>
               {/* <Typography

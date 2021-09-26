@@ -63,62 +63,47 @@ const ProgressReport = () => {
       >
         <Container maxWidth={false}>
           <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <Button>
+                Import
+              </Button>
+              <Button sx={{ mx: 1 }}>
+                Export
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+              >
+                Add student
+              </Button>
+            </Box>
             <Box sx={{ mt: 3 }}>
               <Card>
                 <CardContent>
-                  <Grid
-                    container
-                  >
-                    <Grid
-                      lg={6}
-                      md={12}
-                      xl={9}
-                      xs={12}
-                    >
-                      <Box sx={{ maxWidth: 500 }}>
-                        <TextField
-                          fullWidth
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <SvgIcon
-                                  fontSize="small"
-                                  color="action"
-                                >
-                                  <SearchIcon />
-                                </SvgIcon>
-                              </InputAdornment>
-                            )
-                          }}
-                          placeholder="Search student"
-                          variant="outlined"
-                        />
-                      </Box>
-                    </Grid>
-                    <Grid
-                      lg={6}
-                      md={12}
-                      xl={9}
-                      xs={12}
-                    >
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'flex-end'
-                        }}
-                      >
-                        <Button sx={{ mx: 1 }}>
-                          Download
-                        </Button>
-                        <Button
-                          color="primary"
-                          variant="contained"
-                        >
-                          Submit Reports
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </Grid>
+                  <Box sx={{ maxWidth: 500 }}>
+                    <TextField
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SvgIcon
+                              fontSize="small"
+                              color="action"
+                            >
+                              <SearchIcon />
+                            </SvgIcon>
+                          </InputAdornment>
+                        )
+                      }}
+                      placeholder="Search student"
+                      variant="outlined"
+                    />
+                  </Box>
                 </CardContent>
               </Card>
             </Box>
