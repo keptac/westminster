@@ -43,7 +43,7 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'kelvin@westminster.com',
+              email: 'admin@westminster.com',
               password: 'pass@123'
             }}
             validationSchema={Yup.object().shape({
@@ -56,9 +56,16 @@ const Login = () => {
             onSubmit={(values) => {
               sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
               sessionStorage.setItem('loggedUser', values.email);
-              sessionStorage.setItem('loggedUserRole', 'Staff');
+              // sessionStorage.setItem('loggedUserRole', 'Staff');
               // Check the user role and navigate accordingly
-              navigate('/school-admin/dashboard', { replace: true });
+
+              if (values.email === 'admin@westminster.com') {
+                sessionStorage.setItem('loggedUserRole', 'School Admin');
+                navigate('/school-admin/dashboard', { replace: true });
+              } else {
+                sessionStorage.setItem('loggedUserRole', 'Teacher');
+                navigate('/teacher/dashboard', { replace: true });
+              }
             }}
           >
             {({

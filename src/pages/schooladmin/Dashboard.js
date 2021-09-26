@@ -195,13 +195,13 @@ class AdminDashboard extends React.Component {
                   <Grid
                     item
                     lg={12}
-                    md={6}
+                    md={12}
                     xs={12}
                   >
                     <Card>
                       <CardContent>
                         <PerfectScrollbar>
-                          <Box sx={{ minWidth: 950 }}>
+                          <Box sx={{ minWidth: 600 }}>
                             <Table>
                               <TableHead>
                                 <TableRow>
@@ -253,7 +253,10 @@ class AdminDashboard extends React.Component {
                                     <TableCell>
                                       {moment(reportRecord.createdAt).format('DD/MM/YYYY')}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell
+                                      align="enter"
+                                    >
+                                      stat
                                       <Badge badgeContent={reportRecord.status} color={reportRecord.status === 'Submitted' ? 'success' : 'warning'} />
                                     </TableCell>
                                   </TableRow>
