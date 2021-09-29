@@ -20,6 +20,7 @@ import AdminDashboard from './pages/schooladmin/Dashboard';
 import AddSubject from './pages/schooladmin/Subjects';
 import AddStudents from './pages/schooladmin/Students';
 import AddClass from './pages/schooladmin/Classes';
+import AddNotice from './pages/schooladmin/NoticeBoard';
 
 const routes = [
   // Teacher Routes
@@ -45,6 +46,7 @@ const routes = [
       { path: 'subjects', element: <AddSubject /> },
       { path: 'classes', element: <AddClass /> },
       { path: 'students', element: <AddStudents /> },
+      { path: 'notices', element: <AddNotice /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
