@@ -1,21 +1,20 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
   Divider,
   Grid,
   Typography,
-  Tooltip,
-  Fade
+  // Tooltip,
+  // Fade
 } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import { PeopleOutline } from '@material-ui/icons';
+// import Visibility from '@material-ui/icons/Visibility';
 
-const SubjectCard = ({ resource, ...rest }) => {
-  const navigate = useNavigate();
+const DashboardCard = ({ resource, ...rest }) => {
+  // const navigate = useNavigate();
+  const value = '';
 
   return (
     <Card
@@ -29,34 +28,20 @@ const SubjectCard = ({ resource, ...rest }) => {
       {...rest}
     >
       <CardContent>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pb: 3
-          }}
-        >
-          <Avatar
-            alt={resource.subjectName}
-            src={resource.media}
-            variant="round"
-            sx={{ width: 66, height: 66 }}
-          />
-        </Box>
         <Typography
           align="center"
           color="#997b2f"
           gutterBottom
           variant="h4"
         >
-          {resource.subjectName}
+          {resource.name}
         </Typography>
         <Typography
           align="center"
           color="textPrimary"
-          variant="body1"
+          variant="h3"
         >
-          {`Form Class: ${resource.class}`}
+          {`${resource.count}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -74,17 +59,16 @@ const SubjectCard = ({ resource, ...rest }) => {
               display: 'flex'
             }}
           >
-            <PeopleOutline color="action" />
             <Typography
               color="textSecondary"
               display="inline"
               sx={{ pl: 1 }}
               variant="body2"
             >
-              { `${resource.studentCount} Students Enrolled`}
+              { `${value}`}
             </Typography>
           </Grid>
-          <Grid
+          {/* <Grid
             item
             sx={{
               alignItems: 'center',
@@ -94,22 +78,14 @@ const SubjectCard = ({ resource, ...rest }) => {
             <a
               href="#"
               onClick={() => {
-                navigate('/teacher/report', { replace: true });
+                navigate(`/school-admin/${resource.route}`, { replace: true });
               }}
             >
-              <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Tooltip title={`View ${resource.name} Records`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
                 <Visibility color="default" />
               </Tooltip>
-              {/* <Typography
-              color="#00796b"
-              display="inline"
-              sx={{ pl: 1 }}
-              variant="body2"
-            >
-              Record Now
-            </Typography> */}
             </a>
-          </Grid>
+          </Grid> */}
 
         </Grid>
       </Box>
@@ -117,8 +93,8 @@ const SubjectCard = ({ resource, ...rest }) => {
   );
 };
 
-SubjectCard.propTypes = {
+DashboardCard.propTypes = {
   resource: PropTypes.object.isRequired
 };
 
-export default SubjectCard;
+export default DashboardCard;

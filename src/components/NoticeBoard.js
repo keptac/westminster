@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
 import {
   Card,
   CardHeader,
@@ -11,22 +9,9 @@ import {
   ListItemText
 } from '@material-ui/core';
 
-const products = [
-  {
-    id: uuid(),
-    name: 'General',
-    imageUrl: '/static/images/resources/westminster.png',
-    updatedAt: moment().subtract(2, 'hours'),
-    message: 'Schools will be open during th metioned times'
-  },
-  {
-    id: uuid(),
-    name: 'Public Notice',
-    imageUrl: '/static/images/resources/westminster.png',
-    updatedAt: moment().subtract(3, 'hours'),
-    message: 'Schools will be open during th metioned times such as these'
-  },
-];
+import notices from 'src/__mocks__/notices';
+
+const products = notices;
 
 const NoticeBoard = (props) => (
   <Card {...props}>
@@ -43,7 +28,7 @@ const NoticeBoard = (props) => (
         >
           <ListItemAvatar>
             <img
-              alt={announcement.name}
+              alt={announcement.noticeTitle}
               src={announcement.imageUrl}
               style={{
                 height: 48,
@@ -52,8 +37,8 @@ const NoticeBoard = (props) => (
             />
           </ListItemAvatar>
           <ListItemText
-            primary={announcement.name}
-            secondary={`Updated ${announcement.message}`}
+            primary={announcement.noticeTitle}
+            secondary={`Updated ${announcement.noticeBody}`}
           />
         </ListItem>
       ))}

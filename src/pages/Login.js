@@ -54,11 +54,18 @@ const Login = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(values) => {
-              // Check the user role and navigate accordingly
               sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
               sessionStorage.setItem('loggedUser', values.email);
-              sessionStorage.setItem('loggedUserRole', 'Staff');
-              navigate('/teacher/dashboard', { replace: true });
+              // sessionStorage.setItem('loggedUserRole', 'Staff');
+              // Check the user role and navigate accordingly
+
+              if (values.email === 'admin@westminster.com') {
+                sessionStorage.setItem('loggedUserRole', 'School Admin');
+                navigate('/school-admin/dashboard', { replace: true });
+              } else {
+                sessionStorage.setItem('loggedUserRole', 'Teacher');
+                navigate('/teacher/dashboard', { replace: true });
+              }
             }}
           >
             {({

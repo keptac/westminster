@@ -19,17 +19,16 @@ import {
   Button
 } from '@material-ui/core';
 
-import classes from 'src/__mocks__/classes';
+import subs from 'src/__mocks__/classes';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const AddClass = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [classes, setSubjects] = useState(subs);
 
   const [values, setValues] = useState({
-    subject: null,
-    class: '',
-    level: null
+    className: null,
   });
 
   const handleChange = (event) => {
@@ -48,8 +47,13 @@ const AddClass = () => {
   };
 
   const handleSubmit = () => {
-    console.log(values.subject);
     console.log(values.className);
+    classes.push({
+      className: values.className,
+      classId: 'CLC120'
+    });
+
+    setSubjects(classes);
 
     // Pass to api
   };
@@ -57,7 +61,7 @@ const AddClass = () => {
   return (
     <>
       <Helmet>
-        <title>Classes | Vivid Learn</title>
+        <title>Subjects | Vivid Learn</title>
       </Helmet>
       <Box
         sx={{
@@ -87,13 +91,10 @@ const AddClass = () => {
                         <TableHead>
                           <TableRow>
                             <TableCell>
+                              Class Code
+                            </TableCell>
+                            <TableCell>
                               Class Name
-                            </TableCell>
-                            <TableCell>
-                              Subject
-                            </TableCell>
-                            <TableCell>
-                              Level
                             </TableCell>
                           </TableRow>
                         </TableHead>
@@ -101,7 +102,7 @@ const AddClass = () => {
                           {classes.slice(0, limit).map((classe) => (
                             <TableRow
                               hover
-                              key={classe.classId}
+                              key={classe.className}
                             >
                               <TableCell>
                                 <Box
@@ -114,15 +115,12 @@ const AddClass = () => {
                                     color="textPrimary"
                                     variant="body1"
                                   >
-                                    {`${classe.class}` }
+                                    {`${classe.classId}` }
                                   </Typography>
                                 </Box>
                               </TableCell>
                               <TableCell>
-                                {`${classe.subjectName}`}
-                              </TableCell>
-                              <TableCell>
-                                {classe.level}
+                                {`${classe.className}`}
                               </TableCell>
                             </TableRow>
                           ))}
@@ -179,37 +177,6 @@ const AddClass = () => {
                             variant="outlined"
                           />
                         </Grid>
-                        <Grid
-                          item
-                          md={6}
-                          xs={12}
-                        >
-                          <TextField
-                            fullWidth
-                            label="Subject"
-                            name="subject"
-                            onChange={handleChange}
-                            value={values.subject}
-                            required
-                            variant="outlined"
-                          />
-                        </Grid>
-                        <Grid
-                          item
-                          md={6}
-                          xs={12}
-                        >
-                          <TextField
-                            fullWidth
-                            label="Level"
-                            name="level"
-                            onChange={handleChange}
-                            type="number"
-                            value={values.level}
-                            required
-                            variant="outlined"
-                          />
-                        </Grid>
                       </Grid>
                     </CardContent>
                     <Divider />
@@ -225,7 +192,7 @@ const AddClass = () => {
                         variant="contained"
                         onClick={handleSubmit}
                       >
-                        Save Class
+                        Add Class
                       </Button>
                     </Box>
                   </Card>
