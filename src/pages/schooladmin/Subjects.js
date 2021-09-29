@@ -16,21 +16,29 @@ import {
   CardHeader,
   Divider,
   TextField,
-  Button
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 
-import classes from 'src/__mocks__/classes';
+import subs from 'src/__mocks__/subjects';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-const AddClass = () => {
+const AddSubject = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [level, setLevel] = useState('');
+  const [subjects, setSubjects] = useState(subs);
 
   const [values, setValues] = useState({
     subject: null,
-    class: '',
-    level: null
   });
+
+  const handleChangeLevel = (event) => {
+    setLevel(event.target.value);
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -48,8 +56,15 @@ const AddClass = () => {
   };
 
   const handleSubmit = () => {
-    console.log(values.subject);
-    console.log(values.className);
+    console.log(level);
+    console.log(values.subjectName);
+    subjects.push({
+      level,
+      subjectName: values.subjectName,
+      subjectCode: 'SUB120'
+    });
+
+    setSubjects(subjects);
 
     // Pass to api
   };
@@ -57,7 +72,7 @@ const AddClass = () => {
   return (
     <>
       <Helmet>
-        <title>Classes | Vivid Learn</title>
+        <title>Subjects | Vivid Learn</title>
       </Helmet>
       <Box
         sx={{
@@ -87,10 +102,10 @@ const AddClass = () => {
                         <TableHead>
                           <TableRow>
                             <TableCell>
-                              Class Name
+                              Subject Code
                             </TableCell>
                             <TableCell>
-                              Subject
+                              Subject Name
                             </TableCell>
                             <TableCell>
                               Level
@@ -98,10 +113,10 @@ const AddClass = () => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {classes.slice(0, limit).map((classe) => (
+                          {subjects.slice(0, limit).map((subject) => (
                             <TableRow
                               hover
-                              key={classe.classId}
+                              key={subject.subjectCode}
                             >
                               <TableCell>
                                 <Box
@@ -114,15 +129,15 @@ const AddClass = () => {
                                     color="textPrimary"
                                     variant="body1"
                                   >
-                                    {`${classe.class}` }
+                                    {`${subject.subjectCode}` }
                                   </Typography>
                                 </Box>
                               </TableCell>
                               <TableCell>
-                                {`${classe.subjectName}`}
+                                {`${subject.subjectName}`}
                               </TableCell>
                               <TableCell>
-                                {classe.level}
+                                {subject.level}
                               </TableCell>
                             </TableRow>
                           ))}
@@ -132,7 +147,7 @@ const AddClass = () => {
                   </PerfectScrollbar>
                   <TablePagination
                     component="div"
-                    count={classes.length}
+                    count={subjects.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}
@@ -171,44 +186,35 @@ const AddClass = () => {
                         >
                           <TextField
                             fullWidth
-                            label="Class Name"
-                            name="className"
+                            label="Subject Name"
+                            name="subjectName"
                             onChange={handleChange}
                             required
-                            value={values.className}
+                            value={values.subjectName}
                             variant="outlined"
                           />
                         </Grid>
                         <Grid
                           item
-                          md={6}
+                          md={4}
                           xs={12}
                         >
-                          <TextField
-                            fullWidth
-                            label="Subject"
-                            name="subject"
-                            onChange={handleChange}
-                            value={values.subject}
-                            required
-                            variant="outlined"
-                          />
-                        </Grid>
-                        <Grid
-                          item
-                          md={6}
-                          xs={12}
-                        >
-                          <TextField
-                            fullWidth
-                            label="Level"
-                            name="level"
-                            onChange={handleChange}
-                            type="number"
-                            value={values.level}
-                            required
-                            variant="outlined"
-                          />
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Level</InputLabel>
+                            <Select
+                              // labelId="demo-simple-select-label"
+                              // id="demo-simple-select"
+                              value={level}
+                              label="Level"
+                              onChange={handleChangeLevel}
+                              required
+                              variant="outlined"
+                            >
+                              <MenuItem value="GCSE">GCSE</MenuItem>
+                              <MenuItem value="AS Level">AS Level</MenuItem>
+                              <MenuItem value="A Level">A Level</MenuItem>
+                            </Select>
+                          </FormControl>
                         </Grid>
                       </Grid>
                     </CardContent>
@@ -225,7 +231,7 @@ const AddClass = () => {
                         variant="contained"
                         onClick={handleSubmit}
                       >
-                        Save Class
+                        Add Class
                       </Button>
                     </Box>
                   </Card>
@@ -241,4 +247,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default AddSubject;

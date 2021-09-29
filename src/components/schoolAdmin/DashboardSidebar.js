@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import {
   Home as HomeIcon,
-  BarChart as BarChartIcon,
+  // BarChart as BarChartIcon,
   Lock as LockIcon,
   Edit as EditIcon,
   Users as PeopleIcon,
@@ -34,13 +34,13 @@ const items = [
     icon: HomeIcon,
     title: 'Home'
   },
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: BarChartIcon,
+  //   title: 'Reports'
+  // },
   {
-    href: '/school-admin/dashboard',
-    icon: BarChartIcon,
-    title: 'Reports'
-  },
-  {
-    href: '/school-admin/dashboard',
+    href: '/school-admin/subjects',
     icon: EditIcon,
     title: 'Subjects'
   },

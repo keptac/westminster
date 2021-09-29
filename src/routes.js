@@ -17,6 +17,7 @@ import SubjectContent from './pages/teacher/SubjectContent';
 import AddClass from './pages/teacher/Classes';
 import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
 import AdminDashboard from './pages/schooladmin/Dashboard';
+import AddSubject from './pages/schooladmin/Subjects';
 
 const routes = [
   // Teacher Routes
@@ -39,6 +40,7 @@ const routes = [
     element: <SchoolAdminDashboardLayout />,
     children: [
       { path: 'dashboard', element: <AdminDashboard /> },
+      { path: 'subjects', element: <AddSubject /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

@@ -23,7 +23,7 @@ import {
 import { Search as SearchIcon } from 'react-feather';
 // import StudentResults from 'src/components/teacher/progressReport/StudentResults';
 import MarksForm from 'src/components/teacher/progressReport/MarksForm';
-import students from 'src/__mocks__/students';
+import students from 'src/__mocks__/studentsMarks';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
