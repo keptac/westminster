@@ -27,7 +27,7 @@ import classes from 'src/__mocks__/classes';
 import subjects from 'src/__mocks__/subjects';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-const AddClass = () => {
+const AddStudents = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -255,4 +255,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default AddStudents;
