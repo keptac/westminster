@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -7,13 +7,13 @@ import {
   Divider,
   Grid,
   Typography,
-  Tooltip,
-  Fade
+  // Tooltip,
+  // Fade
 } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
+// import Visibility from '@material-ui/icons/Visibility';
 
 const DashboardCard = ({ resource, ...rest }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const value = '';
 
   return (
@@ -68,7 +68,7 @@ const DashboardCard = ({ resource, ...rest }) => {
               { `${value}`}
             </Typography>
           </Grid>
-          <Grid
+          {/* <Grid
             item
             sx={{
               alignItems: 'center',
@@ -85,7 +85,7 @@ const DashboardCard = ({ resource, ...rest }) => {
                 <Visibility color="default" />
               </Tooltip>
             </a>
-          </Grid>
+          </Grid> */}
 
         </Grid>
       </Box>

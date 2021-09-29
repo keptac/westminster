@@ -19,6 +19,8 @@ import NoticeBoard from 'src/components/NoticeBoard';
 import DashboardCard from 'src/components/schoolAdmin/DashboardCard';
 import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import subjects from 'src/__mocks__/subjects';
+import classes from 'src/__mocks__/classes';
 
 import SchoolAdminServices from '../../services/schoolAdmin';
 
@@ -59,13 +61,13 @@ class AdminDashboard extends React.Component {
     this.setState({
       subjectData: [
         {
-          name: 'Subjects', route: 'SUB123', count: 1
+          name: 'Subjects', route: 'SUB123', count: subjects.length
         },
         {
           name: 'Teachers', route: 'SUB123', count: 2
         },
         {
-          name: 'Classes', route: 'SUB123', count: 3
+          name: 'Classes', route: 'SUB123', count: classes.length
         }
       ],
       reportData: [
