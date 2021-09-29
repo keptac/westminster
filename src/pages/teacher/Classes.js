@@ -185,7 +185,6 @@ const AddClass = () => {
                           md={6}
                           xs={12}
                         >
-
                           <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Class</InputLabel>
                             <Select

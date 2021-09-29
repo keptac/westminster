@@ -45,7 +45,7 @@ const items = [
     title: 'Subjects'
   },
   {
-    href: '/school-admin/dashboard',
+    href: '/school-admin/students',
     icon: PeopleIcon,
     title: 'Students'
   },

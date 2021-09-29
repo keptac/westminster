@@ -52,7 +52,7 @@ const ProgressReport = () => {
   return (
     <>
       <Helmet>
-        <title>Students | Vivid Learn</title>
+        <title>Progress Report | Vivid Learn</title>
       </Helmet>
       <Box
         sx={{
