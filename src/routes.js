@@ -8,12 +8,9 @@ import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 
-import Account from 'src/pages/teacher/Account';
-
 import Dashboard from 'src/pages/teacher/Dashboard';
 
 import ProgressReport from './pages/teacher/ProgressReport';
-import SubjectContent from './pages/teacher/SubjectContent';
 import AddTeacherClass from './pages/teacher/TeacherClasses';
 import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
 import AdminDashboard from './pages/schooladmin/Dashboard';
@@ -28,10 +25,8 @@ const routes = [
     path: 'teacher',
     element: <TeacherDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'report', element: <ProgressReport /> },
-      { path: 'subject', element: <SubjectContent /> },
       { path: 'classes', element: <AddTeacherClass /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
