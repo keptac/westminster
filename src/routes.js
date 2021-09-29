@@ -14,11 +14,12 @@ import Dashboard from 'src/pages/teacher/Dashboard';
 
 import ProgressReport from './pages/teacher/ProgressReport';
 import SubjectContent from './pages/teacher/SubjectContent';
-import AddClass from './pages/teacher/Classes';
+import AddTeacherClass from './pages/teacher/TeacherClasses';
 import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
 import AdminDashboard from './pages/schooladmin/Dashboard';
 import AddSubject from './pages/schooladmin/Subjects';
 import AddStudents from './pages/schooladmin/Students';
+import AddClass from './pages/schooladmin/Classes';
 
 const routes = [
   // Teacher Routes
@@ -30,7 +31,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'report', element: <ProgressReport /> },
       { path: 'subject', element: <SubjectContent /> },
-      { path: 'classes', element: <AddClass /> },
+      { path: 'classes', element: <AddTeacherClass /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -42,6 +43,7 @@ const routes = [
     children: [
       { path: 'dashboard', element: <AdminDashboard /> },
       { path: 'subjects', element: <AddSubject /> },
+      { path: 'classes', element: <AddClass /> },
       { path: 'students', element: <AddStudents /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

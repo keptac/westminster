@@ -17,6 +17,7 @@ import {
   Edit as EditIcon,
   Users as PeopleIcon,
   BarChart2 as ResultsIcon,
+  BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
 } from 'react-feather';
 
@@ -45,6 +46,11 @@ const items = [
     title: 'Subjects'
   },
   {
+    href: '/school-admin/classes',
+    icon: BookOpenIcon,
+    title: 'Classes'
+  },
+  {
     href: '/school-admin/students',
     icon: PeopleIcon,
     title: 'Students'
@@ -57,7 +63,7 @@ const items = [
   {
     href: '/school-admin/dashboard',
     icon: ResultsIcon,
-    title: 'Configure Grades'
+    title: 'Configured Grades'
   }
 ];
 

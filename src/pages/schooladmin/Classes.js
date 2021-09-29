@@ -15,32 +15,27 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  TextField,
+  Button
 } from '@material-ui/core';
 
-import teacherClasses from 'src/__mocks__/teacherClasses';
-import classes from 'src/__mocks__/classes';
-import subjects from 'src/__mocks__/subjects';
+import subs from 'src/__mocks__/classes';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const AddClass = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [classes, setSubjects] = useState(subs);
 
-  const [className, setClassName] = useState('');
+  const [values, setValues] = useState({
+    className: null,
+  });
 
-  const [subject, setSubject] = useState('');
-
-  const handleChangeSubject = (event) => {
-    setSubject(event.target.value);
-  };
-
-  const handleChangeClass = (event) => {
-    setClassName(event.target.value);
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value
+    });
   };
 
   const handleLimitChange = (event) => {
@@ -52,20 +47,13 @@ const AddClass = () => {
   };
 
   const handleSubmit = () => {
-    console.log(subject.subjectName);
-    console.log(subject.subjectCode);
-    console.log(className.className);
-    console.log(className.classId);
-
-    teacherClasses.push({
-      classId: className.classId,
-      class: className.className,
-      subjectCode: subject.subjectCode,
-      level: 'GCSE',
-      subjectName: subject.subjectName,
-      teacherId: '',
-      teacherName: ''
+    console.log(values.className);
+    classes.push({
+      className: values.className,
+      classId: 'CLC120'
     });
+
+    setSubjects(classes);
 
     // Pass to api
   };
@@ -73,7 +61,7 @@ const AddClass = () => {
   return (
     <>
       <Helmet>
-        <title>Classes | Vivid Learn</title>
+        <title>Subjects | Vivid Learn</title>
       </Helmet>
       <Box
         sx={{
@@ -103,21 +91,18 @@ const AddClass = () => {
                         <TableHead>
                           <TableRow>
                             <TableCell>
+                              Class Code
+                            </TableCell>
+                            <TableCell>
                               Class Name
-                            </TableCell>
-                            <TableCell>
-                              Subject
-                            </TableCell>
-                            <TableCell>
-                              Level
                             </TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {teacherClasses.slice(0, limit).map((classe) => (
+                          {classes.slice(0, limit).map((classe) => (
                             <TableRow
                               hover
-                              key={classe.classId}
+                              key={classe.className}
                             >
                               <TableCell>
                                 <Box
@@ -130,15 +115,12 @@ const AddClass = () => {
                                     color="textPrimary"
                                     variant="body1"
                                   >
-                                    {`${classe.class}` }
+                                    {`${classe.classId}` }
                                   </Typography>
                                 </Box>
                               </TableCell>
                               <TableCell>
-                                {`${classe.subjectName}`}
-                              </TableCell>
-                              <TableCell>
-                                {classe.level}
+                                {`${classe.className}`}
                               </TableCell>
                             </TableRow>
                           ))}
@@ -148,7 +130,7 @@ const AddClass = () => {
                   </PerfectScrollbar>
                   <TablePagination
                     component="div"
-                    count={teacherClasses.length}
+                    count={classes.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}
@@ -182,46 +164,18 @@ const AddClass = () => {
                       >
                         <Grid
                           item
-                          md={6}
+                          md={8}
                           xs={12}
                         >
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Class</InputLabel>
-                            <Select
-                              value={className}
-                              label="Subject"
-                              onChange={handleChangeClass}
-                              required
-                              variant="outlined"
-                            >
-                              {classes.map((classe) => (
-                                <MenuItem value={classe}>{classe.className}</MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        </Grid>
-                        <Grid
-                          item
-                          md={6}
-                          xs={12}
-                        >
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Subject</InputLabel>
-                            <Select
-                              value={subject}
-                              label="Subject"
-                              onChange={handleChangeSubject}
-                              required
-                              variant="outlined"
-                            >
-                              {subjects.map((sub) => (
-                                <MenuItem value={sub}>{sub.subjectName}</MenuItem>
-                              ))}
-                              {/* <MenuItem value="GCSE">GCSE</MenuItem>
-                              <MenuItem value="AS Level">AS Level</MenuItem>
-                              <MenuItem value="A Level">A Level</MenuItem> */}
-                            </Select>
-                          </FormControl>
+                          <TextField
+                            fullWidth
+                            label="Class Name"
+                            name="className"
+                            onChange={handleChange}
+                            required
+                            value={values.className}
+                            variant="outlined"
+                          />
                         </Grid>
                       </Grid>
                     </CardContent>
@@ -238,7 +192,7 @@ const AddClass = () => {
                         variant="contained"
                         onClick={handleSubmit}
                       >
-                        Save Class
+                        Add Class
                       </Button>
                     </Box>
                   </Card>
