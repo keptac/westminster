@@ -72,10 +72,7 @@ class AdminDashboard extends React.Component {
       ],
       reportData: [
         {
-          className: '3A', subject: 'English', classId: 'SUB123', status: 'Submitted', teacherName: 'Kelvin Chelenje', reportingPeriod: ''
-        },
-        {
-          className: '3A', subject: 'Shona', classId: 'SUB123', status: 'Pending', teacherName: 'Kelvin Chelenje', reportingPeriod: ''
+          className: '3A', subject: 'Shona', classId: 'SUB123', status: 'Pending', teacherName: 'Kelvin Chelenje', reportingPeriod: '', teacherId: ''
         }
       ]
     });

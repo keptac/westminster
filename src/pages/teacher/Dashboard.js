@@ -65,9 +65,7 @@ class Dashboard extends React.Component {
   }
 
   getDashData() {
-    // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // TeacherServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    TeacherServices.getStudentSubjects('STUD128') // Get all subjects for student
+    TeacherServices.getTeacherClassPerTeacher('TCM001') // Get all subjects for student
       .then((response) => {
         this.setState({ subjectData: response });
       });
@@ -82,7 +80,7 @@ class Dashboard extends React.Component {
         </Helmet>
         <Box
           sx={{
-            backgroundColor: 'background.default',
+            // backgroundColor: 'background.default',
             minHeight: '100%',
             py: 3
           }}
@@ -108,7 +106,7 @@ class Dashboard extends React.Component {
                   {subjectData.map((resource) => (
                     <Grid
                       item
-                      key={resource.id}
+                      key={resource.subjectCode}
                       lg={6}
                       md={6}
                       xs={12}
