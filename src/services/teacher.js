@@ -1,21 +1,15 @@
 import axios from 'axios';
-
-const qs = require('qs');
-
+import qs from 'qs';
 // Submissions
-async function submitAssignment(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
+async function postStudentMarks(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/teacher',
+    baseURL: 'http://localhost:3001/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Origin': 'https://pawacyberschool.net',
-      'Access-Control-Allow-Credentials': true,
     },
   };
   try {
-    const res = await axios.post('/new_submission', qs.stringify(data), config);
+    const res = await axios.post('/studentMarks', qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -30,11 +24,8 @@ async function getStudentsPerClass(classId) {
     headers: { }
   };
 
-  axios(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-      return response.data;
-    })
+  return axios(config)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error);
       return [];
@@ -48,7 +39,7 @@ async function getStudentMarksPerClass(classId) {
     headers: { }
   };
 
-  axios(config)
+  return axios(config)
     .then((response) => response.data)
     .catch((error) => {
       console.log(error);
@@ -57,7 +48,7 @@ async function getStudentMarksPerClass(classId) {
 }
 
 const TeacherServices = {
-  submitAssignment,
+  postStudentMarks,
   getStudentsPerClass,
   getStudentMarksPerClass
 };

@@ -22,10 +22,7 @@ import {
   SvgIcon
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
-// import StudentResults from 'src/components/teacher/progressReport/StudentResults';
 import MarksForm from 'src/components/teacher/progressReport/MarksForm';
-import students from 'src/__mocks__/students';
-// import studentsMarks from 'src/__mocks__/studentsMarks';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -41,22 +38,24 @@ class ProgressReport extends React.Component {
       limit: 10,
       page: 0,
       studentRecord: {},
-      reviewRecord: true,
-      marksResults: []
+      reviewRecord: false,
+      marksResults: [],
+      students: []
     };
   }
 
   componentDidMount() {
-    console.log('User Defined Loading');
     this.getStudentReports();
+    this.getStudentsInClass();
   }
 
   handleReviewRecordChange() {
-    // if (value) {
-    //   this.setState({ reviewRecord: false });
-    // } else {
-    this.setState({ reviewRecord: true });
-    // }
+    const { reviewRecord } = this.state;
+    if (reviewRecord) {
+      this.setState({ reviewRecord: false });
+    } else {
+      this.setState({ reviewRecord: true });
+    }
   }
 
   handleLimitChange(event) {
@@ -73,17 +72,27 @@ class ProgressReport extends React.Component {
     localStorage.setItem('studentRecord', JSON.stringify(row));
   }
 
-  getStudentReports() {
+  async getStudentReports() {
     TeacherServices.getStudentMarksPerClass('CLC001')
       .then((response) => {
-        console.log(response);
         this.setState({ marksResults: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async getStudentsInClass() {
+    TeacherServices.getStudentsPerClass('CLC001')
+      .then((response) => {
+        this.setState({ students: response });
+      }).catch((error) => {
+        console.log(error);
       });
   }
 
   render() {
     const {
-      selectStudent, limit, page, studentRecord, reviewRecord, marksResults
+      selectStudent, limit, page, studentRecord, reviewRecord, marksResults, students
     } = this.state;
     return (
       <>
@@ -143,7 +152,7 @@ class ProgressReport extends React.Component {
                             justifyContent: 'flex-end'
                           }}
                         >
-                          <Button sx={{ mx: 1 }}>
+                          <Button sx={{ mx: 1 }} onClick={() => this.handleReviewRecordChange()}>
                             {reviewRecord ? 'View Students List' : 'Review Records'}
                           </Button>
                           <Button
@@ -235,7 +244,7 @@ class ProgressReport extends React.Component {
                                     {student.comment}
                                   </TableCell>
                                   <TableCell>
-                                    {moment(student.createdAt).format('DD/MM/YYYY')}
+                                    {moment(student.dateJoined).format('DD MMM YYYY')}
                                   </TableCell>
                                 </TableRow>
                               ))}
@@ -246,8 +255,8 @@ class ProgressReport extends React.Component {
                       <TablePagination
                         component="div"
                         count={students.length}
-                        onPageChange={this.handlePageChange}
-                        onRowsPerPageChange={this.handleLimitChange}
+                        onPageChange={() => this.handlePageChange}
+                        onRowsPerPageChange={() => this.handleLimitChange}
                         page={page}
                         rowsPerPage={limit}
                         rowsPerPageOptions={[5, 10, 25]}
@@ -276,16 +285,13 @@ class ProgressReport extends React.Component {
                                   Student Name
                                 </TableCell>
                                 <TableCell>
-                                  Mark
+                                  Class
                                 </TableCell>
                                 <TableCell>
-                                  Grade
+                                  Email Address
                                 </TableCell>
                                 <TableCell>
-                                  Comment
-                                </TableCell>
-                                <TableCell>
-                                  Date
+                                  Date Joined
                                 </TableCell>
                               </TableRow>
                             </TableHead>
@@ -308,27 +314,24 @@ class ProgressReport extends React.Component {
                                         src={student.avatarUrl}
                                         sx={{ mr: 2 }}
                                       >
-                                        {getInitials(`${student.firstName} ${student.surname}`)}
+                                        {getInitials(`${student.name} ${student.surname}`)}
                                       </Avatar>
                                       <Typography
                                         color="textPrimary"
                                         variant="body1"
                                       >
-                                        {`${student.firstName} ${student.surname}` }
+                                        {`${student.name} ${student.surname}` }
                                       </Typography>
                                     </Box>
                                   </TableCell>
                                   <TableCell>
-                                    {`${student.mark}`}
+                                    {student.classId}
                                   </TableCell>
                                   <TableCell>
-                                    {student.grade}
+                                    {student.emailAddress}
                                   </TableCell>
                                   <TableCell>
-                                    {student.comment}
-                                  </TableCell>
-                                  <TableCell>
-                                    {moment(student.createdAt).format('DD/MM/YYYY')}
+                                    {moment(student.dateJoined).format('DD MMM YYYY')}
                                   </TableCell>
                                 </TableRow>
                               ))}
@@ -358,14 +361,14 @@ class ProgressReport extends React.Component {
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
-                  {studentRecord.firstName === undefined ? (
+                  {studentRecord.name === undefined ? (
                     <Card>
                       <CardHeader
                         title="PLEASE CLICK ON STUDENT TO ADD MARKS"
                       />
                       <Divider />
                     </Card>
-                  ) : (<MarksForm studentName={`${studentRecord.firstName} ${studentRecord.surname}`} />) }
+                  ) : (<MarksForm studentName={`${studentRecord.name} ${studentRecord.surname}`} />) }
 
                 </Box>
               </Grid>
