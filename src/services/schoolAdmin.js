@@ -1,21 +1,15 @@
 import axios from 'axios';
-
-const qs = require('qs');
-
+import qs from 'qs';
 // Submissions
-async function submitAssignment(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
+async function postStudentMarks(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/teacher',
+    baseURL: 'http://localhost:3001/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Origin': 'https://pawacyberschool.net',
-      'Access-Control-Allow-Credentials': true,
     },
   };
   try {
-    const res = await axios.post('/new_submission', qs.stringify(data), config);
+    const res = await axios.post('/studentMarks', qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -23,75 +17,40 @@ async function submitAssignment(data) {
   }
 }
 
-// Student Subjects
-async function getStudentSubjects(studentId) {
-  // const token = await JSON.parse(localStorage.getItem('token'));
+async function getAllClasses() {
   const config = {
-    baseURL: 'http://localhost:3001/api/esm/teacher-enrolment',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      // Authorization: `Bearer ${token}`,
-      // 'Access-Control-Allow-Credentials': true,
-    },
+    method: 'get',
+    url: 'http://localhost:3001/api/westminster/class',
+    headers: { }
   };
-  try {
-    const res = await axios.get(`/teacher/${studentId}`, config);
-    return res.data.data;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
 }
 
-async function download(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
-  try {
-    const res = await axios.post(
-      'http://localhost:3001/api/upload/get',
-      qs.stringify(data),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
-        responseType: 'blob',
-      }
-    );
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
+async function getAllSubjects() {
+  const config = {
+    method: 'get',
+    url: 'http://localhost:3001/api/westminster/subjects',
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
 }
 
-async function deleteResource(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
-
-  try {
-    const res = await axios.delete(
-      'http://localhost:3001/api/upload/delete',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data,
-      }
-    );
-
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
-
-const SchoolAdminServices = {
-  submitAssignment,
-  getStudentSubjects,
-  download,
-  deleteResource,
+const AdminServices = {
+  postStudentMarks,
+  getAllClasses,
+  getAllSubjects
 };
 
-export default SchoolAdminServices;
+export default AdminServices;

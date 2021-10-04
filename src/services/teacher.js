@@ -32,10 +32,10 @@ async function getStudentsPerClass(classId) {
     });
 }
 
-async function getStudentMarksPerClass(classId) {
+async function getStudentMarksPerClass(teacherId) {
   const config = {
     method: 'get',
-    url: `http://localhost:3001/api/westminster/studentMarks/class/${classId}`,
+    url: `http://localhost:3001/api/westminster/studentMarks/class/${teacherId}`,
     headers: { }
   };
 
@@ -47,10 +47,43 @@ async function getStudentMarksPerClass(classId) {
     });
 }
 
+async function getTeacherClasses(teacherId) {
+  const config = {
+    method: 'get',
+    url: `http://localhost:3001/api/westminster/teacherClasses/teacher/${teacherId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function addTeacherClass(data) {
+  const config = {
+    baseURL: 'http://localhost:3001/api/westminster',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/teacherClasses', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
-  getStudentMarksPerClass
+  getStudentMarksPerClass,
+  addTeacherClass,
+  getTeacherClasses
 };
 
 export default TeacherServices;
