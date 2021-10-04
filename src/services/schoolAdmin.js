@@ -3,7 +3,7 @@ import qs from 'qs';
 // Submissions
 async function postStudentMarks(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/westminster',
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -20,7 +20,7 @@ async function postStudentMarks(data) {
 async function getAllClasses() {
   const config = {
     method: 'get',
-    url: 'http://localhost:3001/api/westminster/class',
+    url: 'https://westminster-backend.herokuapp.com/api/westminster/class',
     headers: { }
   };
 
@@ -35,7 +35,7 @@ async function getAllClasses() {
 async function getAllSubjects() {
   const config = {
     method: 'get',
-    url: 'http://localhost:3001/api/westminster/subjects',
+    url: 'https://westminster-backend.herokuapp.com/api/westminster/subjects',
     headers: { }
   };
 

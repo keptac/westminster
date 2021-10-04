@@ -4,7 +4,7 @@ const qs = require('qs');
 
 async function postMaterial(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/teacher',
+    baseURL: 'https://westminster-backend.herokuapp.com/api/teacher',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

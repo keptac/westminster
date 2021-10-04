@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-const apiUrl = 'http://localhost:3001/api';
+// const apiUrl = 'http://localhost:3001/api';
+const apiUrl = 'https://westminster-backend.herokuapp.com/api';
+
 // const token = JSON.parse(localStorage.getItem('token'));
 
 const config = {

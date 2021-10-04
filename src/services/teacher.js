@@ -3,7 +3,7 @@ import qs from 'qs';
 // Submissions
 async function postStudentMarks(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/westminster',
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -20,7 +20,7 @@ async function postStudentMarks(data) {
 async function getStudentsPerClass(classId) {
   const config = {
     method: 'get',
-    url: `http://localhost:3001/api/westminster/students/class/${classId}`,
+    url: `https://westminster-backend.herokuapp.com/api/westminster/students/class/${classId}`,
     headers: { }
   };
 
@@ -35,7 +35,7 @@ async function getStudentsPerClass(classId) {
 async function getStudentMarksPerClass(teacherId) {
   const config = {
     method: 'get',
-    url: `http://localhost:3001/api/westminster/studentMarks/class/${teacherId}`,
+    url: `https://westminster-backend.herokuapp.com/api/westminster/studentMarks/class/${teacherId}`,
     headers: { }
   };
 
@@ -50,7 +50,7 @@ async function getStudentMarksPerClass(teacherId) {
 async function getTeacherClasses(teacherId) {
   const config = {
     method: 'get',
-    url: `http://localhost:3001/api/westminster/teacherClasses/teacher/${teacherId}`,
+    url: `https://westminster-backend.herokuapp.com/api/westminster/teacherClasses/teacher/${teacherId}`,
     headers: { }
   };
 
@@ -65,7 +65,7 @@ async function getTeacherClasses(teacherId) {
 async function checkTeacherSubmissionStatus(teacherId, subjectCode) {
   const config = {
     method: 'get',
-    url: `http://localhost:3001/api/westminster/reportsubmissions/teacherSubmissionStatus/${teacherId}/${subjectCode}`,
+    url: `https://westminster-backend.herokuapp.com/api/westminster/reportsubmissions/teacherSubmissionStatus/${teacherId}/${subjectCode}`,
     headers: { }
   };
 
@@ -79,7 +79,7 @@ async function checkTeacherSubmissionStatus(teacherId, subjectCode) {
 
 async function addTeacherClass(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/westminster',
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -95,7 +95,7 @@ async function addTeacherClass(data) {
 
 async function submitReports(data) {
   const config = {
-    baseURL: 'http://localhost:3001/api/westminster',
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
