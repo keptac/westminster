@@ -62,6 +62,21 @@ async function getTeacherClasses(teacherId) {
     });
 }
 
+async function checkTeacherSubmissionStatus(teacherId, subjectCode) {
+  const config = {
+    method: 'get',
+    url: `http://localhost:3001/api/westminster/reportsubmissions/teacherSubmissionStatus/${teacherId}/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function addTeacherClass(data) {
   const config = {
     baseURL: 'http://localhost:3001/api/westminster',
@@ -78,7 +93,7 @@ async function addTeacherClass(data) {
   }
 }
 
-async function submitClassMarks(data) {
+async function submitReports(data) {
   const config = {
     baseURL: 'http://localhost:3001/api/westminster',
     headers: {
@@ -100,7 +115,8 @@ const TeacherServices = {
   getStudentMarksPerClass,
   addTeacherClass,
   getTeacherClasses,
-  submitClassMarks
+  checkTeacherSubmissionStatus,
+  submitReports
 };
 
 export default TeacherServices;

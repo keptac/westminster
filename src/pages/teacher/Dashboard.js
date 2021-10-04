@@ -19,42 +19,13 @@ class Dashboard extends React.Component {
     };
   }
 
-  // getAssignments = () => {
-  //   StudentService.getAssignments(this.state.assignment.classId)
-  //     .then((response) => {
-  //       this.setState({ assignments: response }, () => {
-  //         let pages = [];
-  //         let perPage = 5;
-  //         const totalPageCount = Math.ceil(
-  //           this.state.assignments.length / perPage
-  //         );
-
-  //         for (var i = 1; i <= totalPageCount; i++) {
-  //           pages.push(i);
-  //         }
-
-  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
-  //           currentPageNumber: this.state.currentPageNumber,
-  //           perPage,
-  //         });
-  //         this.setState({ pages, assignments_ });
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       M.toast({
-  //         html: "Failed to find assignment folder",
-  //         classes: "red accent-2",
-  //       });
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
     this.getDashData();
   }
 
   getDashData() {
-    TeacherServices.getTeacherClasses('TCM001') // Get all subjects for student
+    const userId = sessionStorage.getItem('userId');
+    TeacherServices.getTeacherClasses(userId) // Get all subjects for student
       .then((response) => {
         this.setState({ subjectData: response });
       });

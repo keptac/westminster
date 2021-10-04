@@ -44,6 +44,7 @@ class ProgressReport extends React.Component {
       marksResults: [],
       students: [],
       recordingSubject: {},
+      reportsSubmitted: false
       // classId: ''
     };
     this.setState({ recordingSubject: JSON.parse(localStorage.getItem('recordingSubject')) });
@@ -53,6 +54,7 @@ class ProgressReport extends React.Component {
   componentDidMount() {
     this.getStudentReports();
     this.getStudentsInClass();
+    this.getTeacherSubmissionStatus();
   }
 
   handleReviewRecordChange() {
@@ -78,11 +80,36 @@ class ProgressReport extends React.Component {
     localStorage.setItem('studentRecord', JSON.stringify(row));
   }
 
+  async handleReportSubmission() {
+    const classData = JSON.parse(localStorage.getItem('recordingSubject'));
+    const { students } = this.state;
+    const userId = sessionStorage.getItem('userId');
+    const teacherName = sessionStorage.getItem('name');
+
+    if (students.length > 0) {
+      const data = {
+        className: classData.className,
+        subject: classData.subjectCode,
+        classId: classData.className,
+        status: 'SUBMITTED',
+        teacherName,
+        teacherId: userId
+      };
+
+      TeacherServices.submitReports(data)
+        .then((response) => {
+          console.log(response);
+          this.setState({ reportsSubmitted: true });
+        }).catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert('Hello');
+    }
+  }
+
   async getStudentReports() {
-    // const { recordingSubject } = this.state;
     const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
-    console.log('------ Reports------>>>.');
-    console.log(classId);
     TeacherServices.getStudentMarksPerClass(classId)
       .then((response) => {
         this.setState({ marksResults: response });
@@ -93,8 +120,6 @@ class ProgressReport extends React.Component {
 
   async getStudentsInClass() {
     const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
-    console.log('------------>>>.');
-    console.log(classId);
     TeacherServices.getStudentsPerClass(classId)
       .then((response) => {
         this.setState({ students: response });
@@ -103,9 +128,24 @@ class ProgressReport extends React.Component {
       });
   }
 
+  async getTeacherSubmissionStatus() {
+    const userId = sessionStorage.getItem('userId');
+    const classData = JSON.parse(localStorage.getItem('recordingSubject'));
+    TeacherServices.checkTeacherSubmissionStatus(userId, classData.subjectCode)
+      .then((response) => {
+        if (response.submitted) {
+          this.setState({ reportsSubmitted: response.submitted, reviewRecord: true });
+        } else {
+          this.setState({ reportsSubmitted: response.submitted });
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const {
-      selectStudent, limit, page, studentRecord, reviewRecord, marksResults, students, recordingSubject
+      selectStudent, limit, page, studentRecord, reviewRecord, marksResults, students, recordingSubject, reportsSubmitted
     } = this.state;
     return (
       <>
@@ -159,22 +199,41 @@ class ProgressReport extends React.Component {
                         xl={9}
                         xs={12}
                       >
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                        >
-                          <Button sx={{ mx: 1 }} onClick={() => this.handleReviewRecordChange()}>
-                            {reviewRecord ? 'View Students List' : 'Review Records'}
-                          </Button>
-                          <Button
-                            color="primary"
-                            variant="contained"
-                          >
-                            Submit Reports
-                          </Button>
-                        </Box>
+                        {reportsSubmitted
+                          ? (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end'
+                              }}
+                            >
+                              <Button
+                                color="primary"
+                                variant="contained"
+                              >
+                                Reports Submitted For Processing
+                              </Button>
+                            </Box>
+                          )
+                          : (
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end'
+                              }}
+                            >
+                              <Button sx={{ mx: 1 }} onClick={() => this.handleReviewRecordChange()}>
+                                {reviewRecord ? 'View Students List' : 'Review Records'}
+                              </Button>
+                              <Button
+                                onClick={() => this.handleReportSubmission()}
+                                color="primary"
+                                variant="contained"
+                              >
+                                Submit Reports
+                              </Button>
+                            </Box>
+                          )}
                       </Grid>
                     </Grid>
                   </CardContent>
@@ -378,7 +437,7 @@ class ProgressReport extends React.Component {
                   {studentRecord.name === undefined ? (
                     <Card>
                       <CardHeader
-                        title="PLEASE CLICK ON STUDENT TO ADD MARKS"
+                        title={reportsSubmitted ? 'Marks already Submitted for this subject' : 'PLEASE CLICK ON STUDENT TO ADD MARKS'}
                       />
                       <Divider />
                     </Card>

@@ -14,6 +14,8 @@ import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
+  sessionStorage.clear();
+  localStorage.clear();
   return (
     <>
       <Helmet>
@@ -56,6 +58,8 @@ const Login = () => {
             onSubmit={(values) => {
               sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
               sessionStorage.setItem('loggedUser', values.email);
+              sessionStorage.setItem('userId', 'TCM001');
+              sessionStorage.setItem('name', 'Kelvin Chelenje');
               // sessionStorage.setItem('loggedUserRole', 'Staff');
               // Check the user role and navigate accordingly
 

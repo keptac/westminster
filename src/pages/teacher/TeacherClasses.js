@@ -35,20 +35,14 @@ class AddTeacherClass extends React.Component {
       subjects: [],
       teacherClasses: [],
       className: {},
-      subject: {},
+      subject: {}
     };
   }
 
   componentDidMount() {
     this.getAllClasses();
     this.getAllSubjects();
-    this.getTeacherClasses('TCM001');
-  }
-
-  componentDidUpdate() {
-    this.getAllClasses();
-    this.getAllSubjects();
-    this.getTeacherClasses('TCM001');
+    this.getTeacherClasses();
   }
 
   handleChangeSubject(selectedSubject) {
@@ -71,6 +65,8 @@ class AddTeacherClass extends React.Component {
     const {
       subject, className, teacherClasses
     } = this.state;
+    const userId = sessionStorage.getItem('userId');
+    const teacherName = sessionStorage.getItem('name');
 
     const data = {
       classId: className.classId,
@@ -78,8 +74,8 @@ class AddTeacherClass extends React.Component {
       subjectCode: subject.subjectCode,
       level: subject.level,
       subjectName: subject.subjectName,
-      teacherId: 'TCM001',
-      teacherName: 'Super Teacher'
+      teacherId: userId,
+      teacherName
     };
 
     console.log('Saving sata');
@@ -113,7 +109,8 @@ class AddTeacherClass extends React.Component {
   }
 
   async getTeacherClasses() {
-    TeacherServices.getTeacherClasses('TCM001')
+    const userId = sessionStorage.getItem('userId');
+    TeacherServices.getTeacherClasses(userId)
       .then((response) => {
         this.setState({ teacherClasses: response });
       }).catch((error) => {
