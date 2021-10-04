@@ -15,7 +15,7 @@ import TeacherServices from 'src/services/teacher';
 
 const MarksForm = ({ studentName }, props) => {
   const [values, setValues] = useState({
-    mark: null,
+    mark: 0,
     comment: '',
   });
 
@@ -55,7 +55,7 @@ const MarksForm = ({ studentName }, props) => {
         localStorage.removeItem(studentRecord);
         setValues({
           ...values,
-          mark: null,
+          mark: 0,
           comment: ''
         });
       }).catch((error) => {

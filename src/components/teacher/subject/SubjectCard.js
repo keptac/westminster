@@ -39,7 +39,7 @@ const SubjectCard = ({ resource, ...rest }) => {
         >
           <Avatar
             alt={resource.subjectName}
-            src={resource.media}
+            src="src/media.png"
             variant="round"
             sx={{ width: 66, height: 66 }}
           />
@@ -48,16 +48,16 @@ const SubjectCard = ({ resource, ...rest }) => {
           align="center"
           // color="#997b2f"
           gutterBottom
-          variant="h4"
+          variant="h5"
         >
-          {resource.subjectName}
+          {`${resource.subjectName} (${resource.classId})`}
         </Typography>
         <Typography
           align="center"
           color="primary"
           variant="body1"
         >
-          {`Form Class: ${resource.class}`}
+          {`Form Class: ${resource.className}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -94,6 +94,7 @@ const SubjectCard = ({ resource, ...rest }) => {
           >
             <Button
               onClick={() => {
+                localStorage.setItem('recordingSubject', JSON.stringify(resource));
                 navigate('/teacher/report', { replace: true });
               }}
             >

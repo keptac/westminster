@@ -78,12 +78,29 @@ async function addTeacherClass(data) {
   }
 }
 
+async function submitClassMarks(data) {
+  const config = {
+    baseURL: 'http://localhost:3001/api/westminster',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/reportsubmissions', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
   getStudentMarksPerClass,
   addTeacherClass,
-  getTeacherClasses
+  getTeacherClasses,
+  submitClassMarks
 };
 
 export default TeacherServices;

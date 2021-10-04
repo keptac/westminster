@@ -45,6 +45,12 @@ class AddTeacherClass extends React.Component {
     this.getTeacherClasses('TCM001');
   }
 
+  componentDidUpdate() {
+    this.getAllClasses();
+    this.getAllSubjects();
+    this.getTeacherClasses('TCM001');
+  }
+
   handleChangeSubject(selectedSubject) {
     this.setState({ subject: selectedSubject });
   }

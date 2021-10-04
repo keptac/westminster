@@ -29,6 +29,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import getInitials from 'src/utils/getInitials';
 import TeacherServices from 'src/services/teacher';
 
+// const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
+
 // const ProgressReport = () => {
 class ProgressReport extends React.Component {
   constructor(props) {
@@ -40,8 +42,12 @@ class ProgressReport extends React.Component {
       studentRecord: {},
       reviewRecord: false,
       marksResults: [],
-      students: []
+      students: [],
+      recordingSubject: {},
+      // classId: ''
     };
+    this.setState({ recordingSubject: JSON.parse(localStorage.getItem('recordingSubject')) });
+    // this.setState({ classId: this.recordingSubject.classId });
   }
 
   componentDidMount() {
@@ -73,7 +79,11 @@ class ProgressReport extends React.Component {
   }
 
   async getStudentReports() {
-    TeacherServices.getStudentMarksPerClass('CLC001')
+    // const { recordingSubject } = this.state;
+    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
+    console.log('------ Reports------>>>.');
+    console.log(classId);
+    TeacherServices.getStudentMarksPerClass(classId)
       .then((response) => {
         this.setState({ marksResults: response });
       }).catch((error) => {
@@ -82,7 +92,10 @@ class ProgressReport extends React.Component {
   }
 
   async getStudentsInClass() {
-    TeacherServices.getStudentsPerClass('CLC001')
+    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
+    console.log('------------>>>.');
+    console.log(classId);
+    TeacherServices.getStudentsPerClass(classId)
       .then((response) => {
         this.setState({ students: response });
       }).catch((error) => {
@@ -92,7 +105,7 @@ class ProgressReport extends React.Component {
 
   render() {
     const {
-      selectStudent, limit, page, studentRecord, reviewRecord, marksResults, students
+      selectStudent, limit, page, studentRecord, reviewRecord, marksResults, students, recordingSubject
     } = this.state;
     return (
       <>
@@ -184,6 +197,7 @@ class ProgressReport extends React.Component {
                 >
                   <Box sx={{ pt: 3 }}>
                     <Card>
+                      {recordingSubject.className}
                       <PerfectScrollbar>
                         <Box sx={{ minWidth: 950 }}>
                           <Table>

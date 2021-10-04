@@ -50,22 +50,11 @@ class Dashboard extends React.Component {
   // };
 
   componentDidMount() {
-    // this.getDashData();
-
-    this.setState({
-      subjectData: [
-        {
-          subjectName: 'Mathematics', subjectCode: 'SUB123', class: 'Four', studentCount: 5, classId: 'CLM123', level: 'GCSE', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
-        },
-        {
-          subjectName: 'Mathematics', subjectCode: 'SUB124', class: 'Two', studentCount: 15, classId: 'CLM124', level: 'AS', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
-        }
-      ]
-    });
+    this.getDashData();
   }
 
   getDashData() {
-    TeacherServices.getTeacherClassPerTeacher('TCM001') // Get all subjects for student
+    TeacherServices.getTeacherClasses('TCM001') // Get all subjects for student
       .then((response) => {
         this.setState({ subjectData: response });
       });
