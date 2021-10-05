@@ -46,8 +46,8 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'kelvin@westminster.com',
-              password: 'pass@123'
+              email: 'admin@westminster.com',
+              password: 'admin@123'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
