@@ -19,8 +19,6 @@ import NoticeBoard from 'src/components/NoticeBoard';
 import DashboardCard from 'src/components/schoolAdmin/DashboardCard';
 import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import subjects from 'src/__mocks__/subjects';
-import classes from 'src/__mocks__/classes';
 
 import SchoolAdminServices from '../../services/schoolAdmin';
 
@@ -29,69 +27,31 @@ class AdminDashboard extends React.Component {
     super(props);
     this.state = {
       subjectData: [],
-      reportData: []
+      reportData: [],
     };
   }
 
-  // getAssignments = () => {
-  //   claseservice.getAssignments(this.state.assignment.countId)
-  //     .then((response) => {
-  //       this.setState({ assignments: response }, () => {
-  //         let pages = [];
-  //         let perPage = 5;
-  //         const totalPageCount = Math.ceil(
-  //           this.state.assignments.length / perPage
-  //         );
-
-  //         this.setState({ pages, assignments_ });
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       M.toast({
-  //         html: "Failed to find assignment folder",
-  //         countes: "red accent-2",
-  //       });
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
-    // this.getDashData();
-
-    this.setState({
-      subjectData: [
-        {
-          name: 'Subjects', route: 'SUB123', count: subjects.length
-        },
-        {
-          name: 'Teachers', route: 'SUB123', count: 2
-        },
-        {
-          name: 'Classes', route: 'SUB123', count: classes.length
-        }
-      ],
-      reportData: [
-        {
-          className: '3A', subject: 'Shona', classId: 'SUB123', status: 'Pending', teacherName: 'Kelvin Chelenje', reportingPeriod: '', teacherId: ''
-        }
-      ]
-    });
-
-    // this.setState({
-
-    // });
+    this.getDashData();
   }
 
   getDashData() {
-    // const reportData = JSON.parse(localStorage.getItem('userAll'));
-    // claseservices.getclasesubjects(reportData.classId) // Get all courses by userid
-    SchoolAdminServices.getStudentSubjects('STUD128') // Get all subjects for class
+    const { subjectData } = this.state;
+
+    SchoolAdminServices.getAllClasses()
       .then((response) => {
-        this.setState({ subjectData: response });
+        subjectData.push({ name: 'Classes', count: response.length });
+        this.setState({ subjectData });
       });
-    SchoolAdminServices.getClassReportStatuses('STUD128') // Get all subjects for class
+    SchoolAdminServices.getAllSubjects()
       .then((response) => {
-        this.setState({ reportData: response });
+        subjectData.push({ name: 'Subjects', count: response.length });
+        this.setState({ subjectData });
+      });
+    SchoolAdminServices.getAllTeachers()
+      .then((response) => {
+        subjectData.push({ name: 'Teachers', count: response.length });
+        this.setState({ subjectData });
       });
   }
 

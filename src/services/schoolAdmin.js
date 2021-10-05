@@ -47,10 +47,42 @@ async function getAllSubjects() {
     });
 }
 
+async function getAllTeachers() {
+  const config = {
+    method: 'get',
+    url: 'https://westminster-backend.herokuapp.com/api/westminster/staffType/Teacher',
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getAllNotices() {
+  const config = {
+    method: 'get',
+    url: 'https://westminster-backend.herokuapp.com/api/westminster/announcements',
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const AdminServices = {
   postStudentMarks,
   getAllClasses,
-  getAllSubjects
+  getAllSubjects,
+  getAllTeachers,
+  getAllNotices
 };
 
 export default AdminServices;
