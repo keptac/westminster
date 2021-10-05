@@ -17,6 +17,37 @@ async function postClasses(data) {
   }
 }
 
+async function postNewStudent(data) {
+  const config = {
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/students', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function getAllStudents() {
+  const config = {
+    method: 'get',
+    url: 'https://westminster-backend.herokuapp.com/api/westminster/students',
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function postSubject(data) {
   const config = {
     baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
@@ -99,7 +130,9 @@ const AdminServices = {
   getAllSubjects,
   getAllTeachers,
   getAllNotices,
-  postSubject
+  postSubject,
+  postNewStudent,
+  getAllStudents
 };
 
 export default AdminServices;
