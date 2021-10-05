@@ -9,7 +9,8 @@ import {
   Grid,
   Typography,
   Tooltip,
-  Fade
+  Fade,
+  Button
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import { PeopleOutline } from '@material-ui/icons';
@@ -38,25 +39,25 @@ const SubjectCard = ({ resource, ...rest }) => {
         >
           <Avatar
             alt={resource.subjectName}
-            src={resource.media}
+            src="src/media.png"
             variant="round"
             sx={{ width: 66, height: 66 }}
           />
         </Box>
         <Typography
           align="center"
-          color="#997b2f"
+          // color="#997b2f"
           gutterBottom
-          variant="h4"
+          variant="h5"
         >
-          {resource.subjectName}
+          {`${resource.subjectName} (${resource.classId})`}
         </Typography>
         <Typography
           align="center"
-          color="textPrimary"
+          color="primary"
           variant="body1"
         >
-          {`Form Class: ${resource.class}`}
+          {`Form Class: ${resource.className}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -76,7 +77,7 @@ const SubjectCard = ({ resource, ...rest }) => {
           >
             <PeopleOutline color="action" />
             <Typography
-              color="textSecondary"
+              color="secondaey"
               display="inline"
               sx={{ pl: 1 }}
               variant="body2"
@@ -91,24 +92,17 @@ const SubjectCard = ({ resource, ...rest }) => {
               display: 'flex'
             }}
           >
-            <a
-              href="#"
+            <Button
               onClick={() => {
+                localStorage.setItem('recordingSubject', JSON.stringify(resource));
                 navigate('/teacher/report', { replace: true });
               }}
             >
               <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                <Visibility color="default" />
+                <Visibility color="inherit" />
               </Tooltip>
-              {/* <Typography
-              color="#00796b"
-              display="inline"
-              sx={{ pl: 1 }}
-              variant="body2"
-            >
-              Record Now
-            </Typography> */}
-            </a>
+
+            </Button>
           </Grid>
 
         </Grid>

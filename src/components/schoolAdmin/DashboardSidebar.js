@@ -16,7 +16,7 @@ import {
   Lock as LockIcon,
   Edit as EditIcon,
   Users as PeopleIcon,
-  BarChart2 as ResultsIcon,
+  // BarChart2 as ResultsIcon,
   BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
 } from 'react-feather';
@@ -60,11 +60,11 @@ const items = [
     icon: NoticeBoardIcon,
     title: 'Notices'
   },
-  {
-    href: '/school-admin/dashboard',
-    icon: ResultsIcon,
-    title: 'Configured Grades'
-  }
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: ResultsIcon,
+  //   title: 'Configured Grades'
+  // }
 ];
 
 const login = {

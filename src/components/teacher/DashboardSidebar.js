@@ -18,12 +18,6 @@ import {
 
 import NavItem from '../NavItem';
 
-const user = {
-  avatar: sessionStorage.getItem('loggedUserAvatar'),
-  jobTitle: sessionStorage.getItem('loggedUserRole'),
-  name: sessionStorage.getItem('loggedUser')
-};
-
 const items = [
   {
     href: '/teacher/dashboard',
@@ -48,6 +42,11 @@ const login = {
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const user = {
+    avatar: sessionStorage.getItem('loggedUserAvatar'),
+    jobTitle: sessionStorage.getItem('loggedUserRole'),
+    name: sessionStorage.getItem('name')
+  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {

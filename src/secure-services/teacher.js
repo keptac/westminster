@@ -4,11 +4,14 @@ import qs from 'qs';
 const deploymentUrl = 'http://localhost:3001';
 // const deploymentUrl = 'https://westminster-backend.herokuapp.com';
 
+const token = sessionStorage.getItem('token');
+
 async function postStudentMarks(data) {
   const config = {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -24,7 +27,7 @@ async function getStudentsPerClass(classId) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/students/class/${classId}`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -39,7 +42,7 @@ async function getStudentMarksPerClass(teacherId) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/studentMarks/class/${teacherId}`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -54,7 +57,7 @@ async function getTeacherClasses(teacherId) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/teacherClasses/teacher/${teacherId}`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -69,7 +72,7 @@ async function checkTeacherSubmissionStatus(teacherId, subjectCode) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/reportsubmissions/teacherSubmissionStatus/${teacherId}/${subjectCode}`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -85,6 +88,7 @@ async function addTeacherClass(data) {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -101,6 +105,7 @@ async function submitReports(data) {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {

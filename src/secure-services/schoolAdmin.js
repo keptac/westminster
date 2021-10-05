@@ -6,11 +6,15 @@ import fileDownload from 'js-file-download';
 const deploymentUrl = 'http://localhost:3001';
 // const deploymentUrl = 'https://westminster-backend.herokuapp.com';
 
+const token = sessionStorage.getItem('token');
+
+// Submissions
 async function postClasses(data) {
   const config = {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -27,6 +31,7 @@ async function postNewStudent(data) {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -42,7 +47,7 @@ async function getAllStudents() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/students`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -58,6 +63,7 @@ async function postSubject(data) {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -73,7 +79,7 @@ async function getAllClasses() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/class`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -88,7 +94,7 @@ async function getAllSubjects() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/subjects`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -103,7 +109,7 @@ async function getAllTeachers() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/staffType/Teacher`,
-    headers: { }
+    headers: { 'x-access-token': token }
   };
 
   return axios(config)
@@ -119,6 +125,7 @@ async function postAnnouncement(data) {
     baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'x-access-token': token
     },
   };
   try {
@@ -134,7 +141,11 @@ async function getAllNotices() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/announcements`,
-    headers: {}
+    headers: {
+      'x-access-token': token,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    }
   };
 
   return axios(config)
@@ -149,7 +160,7 @@ async function downloadReports() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/westminster/studentMarks/reportgeneration`,
-    headers: { 'Content-Type': 'application/pdf', }
+    headers: { 'Content-Type': 'application/pdf', 'x-access-token': token }
   };
 
   return axios(config)

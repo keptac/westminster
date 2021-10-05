@@ -2,49 +2,70 @@ import {
   Card,
   CardHeader,
   Divider,
-
   List,
   ListItem,
   ListItemAvatar,
   ListItemText
 } from '@material-ui/core';
 
-import notices from 'src/__mocks__/notices';
+import React from 'react';
+import SchoolAdminServices from '../services/schoolAdmin';
 
-const products = notices;
+class NoticeBoard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notices: []
+    };
+  }
 
-const NoticeBoard = (props) => (
-  <Card {...props}>
-    <CardHeader
-      subtitle={`${products.length} in total`}
-      title="Notice Board"
-    />
-    <Divider />
-    <List>
-      {products.map((announcement, i) => (
-        <ListItem
-          divider={i < products.length - 1}
-          key={announcement.id}
-        >
-          <ListItemAvatar>
-            <img
-              alt={announcement.noticeTitle}
-              src={announcement.imageUrl}
-              style={{
-                height: 48,
-                width: 48
-              }}
-            />
-          </ListItemAvatar>
-          <ListItemText
-            primary={announcement.noticeTitle}
-            secondary={`Updated ${announcement.noticeBody}`}
-          />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-  </Card>
-);
+  componentDidMount() {
+    this.getDashData();
+  }
+
+  getDashData() {
+    SchoolAdminServices.getAllNotices()
+      .then((response) => {
+        this.setState({ notices: response });
+      });
+  }
+
+  render() {
+    const { notices } = this.state;
+    return (
+      <Card>
+        <CardHeader
+          subtitle={`${notices.length} in total`}
+          title="Notice Board"
+        />
+        <Divider />
+        <List>
+          {notices.map((announcement, i) => (
+            <ListItem
+              divider={i < notices.length - 1}
+              key={announcement.id}
+            >
+              <ListItemAvatar>
+                <img
+                  alt={announcement.noticeTitle}
+                  src={announcement.imageUrl}
+                  style={{
+                    height: 48,
+                    width: 48
+                  }}
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={announcement.noticeTitle}
+                secondary={`Updated ${announcement.noticeBody}`}
+              />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Card>
+    );
+  }
+}
 
 export default NoticeBoard;
