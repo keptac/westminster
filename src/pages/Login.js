@@ -10,6 +10,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import AuthService from 'src/services/authServices';
 import Logo from '../components/Logo';
 
 const Login = () => {
@@ -56,20 +57,32 @@ const Login = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(values) => {
-              sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
-              sessionStorage.setItem('loggedUser', values.email);
-              sessionStorage.setItem('userId', 'TCM001');
-              sessionStorage.setItem('name', 'Kelvin Chelenje');
-              // sessionStorage.setItem('loggedUserRole', 'Staff');
-              // Check the user role and navigate accordingly
+              AuthService.login(values)
+                .then((response) => {
+                  if (response.success) {
+                    sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
+                    sessionStorage.setItem('loggedUser', values.email);
+                    sessionStorage.setItem('userId', response.user.staffId);
+                    sessionStorage.setItem('name', response.user.name);
+                    sessionStorage.setItem('loggedUserRole', response.user.userType);
+                    sessionStorage.setItem('token', response.user.token);
 
-              if (values.email === 'admin@westminster.com') {
-                sessionStorage.setItem('loggedUserRole', 'School Admin');
-                navigate('/school-admin/dashboard', { replace: true });
-              } else {
-                sessionStorage.setItem('loggedUserRole', 'Teacher');
-                navigate('/teacher/dashboard', { replace: true });
-              }
+                    if (response.user.userType === 'TEACHER') {
+                      navigate('/teacher/dashboard', { replace: true });
+                    } else if (response.user.userType === 'ADMIN') {
+                      navigate('/school-admin/dashboard', { replace: true });
+                    } else {
+                      console.log('Account not setup correctly. Please contact Admin');// Send message
+                      navigate('/', { replace: true });
+                    }
+                  } else {
+                    console.log(response.message);// Send message
+                    navigate('/', { replace: true });
+                  }
+                }).catch((error) => {
+                  console.log(error);
+                  navigate('/', { replace: true });
+                });
             }}
           >
             {({
