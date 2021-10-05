@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 // Submissions
-async function postStudentMarks(data) {
+async function postClasses(data) {
   const config = {
     baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
     headers: {
@@ -9,7 +9,7 @@ async function postStudentMarks(data) {
     },
   };
   try {
-    const res = await axios.post('/studentMarks', qs.stringify(data), config);
+    const res = await axios.post('/class', qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -78,7 +78,7 @@ async function getAllNotices() {
 }
 
 const AdminServices = {
-  postStudentMarks,
+  postClasses,
   getAllClasses,
   getAllSubjects,
   getAllTeachers,
