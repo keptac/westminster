@@ -6,15 +6,14 @@ import {
   Box,
   Button,
   Container,
-  FormHelperText,
   Link,
   TextField,
   Typography
 } from '@material-ui/core';
+import AuthService from 'src/services/authServices';
 
 const Register = () => {
   const navigate = useNavigate();
-
   return (
     <>
       <Helmet>
@@ -34,21 +33,34 @@ const Register = () => {
             initialValues={{
               email: '',
               firstName: '',
-              lastName: '',
+              surname: '',
               password: '',
-              policy: false
+              idNumber: '',
+              userType: 'TEACHER',
+              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                 firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                surname: Yup.string().max(255).required('Last name is required'),
+                idNumber: Yup.string().max(255).required('ID Number is required'),
                 password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              AuthService.register(values)
+                .then((response) => {
+                  console.log(response);
+                  if (response.success) {
+                    navigate('/login', { replace: true });
+                  } else {
+                    navigate('/register', { replace: true });
+                    console.log(response.message);
+                  }
+                }).catch((error) => {
+                  console.log(error);
+                });
             }}
           >
             {({
@@ -89,15 +101,27 @@ const Register = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
+                  error={Boolean(touched.surname && errors.surname)}
                   fullWidth
-                  helperText={touched.lastName && errors.lastName}
+                  helperText={touched.surname && errors.surname}
                   label="Last name"
                   margin="normal"
-                  name="lastName"
+                  name="surname"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.surname}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.idNumber && errors.idNumber)}
+                  fullWidth
+                  helperText={touched.idNumber && errors.idNumber}
+                  label="ID Number"
+                  margin="normal"
+                  name="idNumber"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.idNumber}
                   variant="outlined"
                 />
                 <TextField
@@ -126,11 +150,6 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
-                )}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"

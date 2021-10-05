@@ -10,10 +10,13 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import AuthService from 'src/services/authServices';
+import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
-
+  sessionStorage.clear();
+  localStorage.clear();
   return (
     <>
       <Helmet>
@@ -28,10 +31,22 @@ const Login = () => {
           justifyContent: 'center'
         }}
       >
+        <Container
+          sx={{
+            backgroundColor: 'background.default',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '10%',
+            justifyContent: 'center',
+            width: '6%'
+          }}
+        >
+          <Logo />
+        </Container>
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'dev@westminster.com',
+              email: 'kelvin@westminster.com',
               password: 'pass@123'
             }}
             validationSchema={Yup.object().shape({
@@ -41,9 +56,33 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              // Check the user role and navigate accordingly
-              navigate('/teacher/dashboard', { replace: true });
+            onSubmit={(values) => {
+              AuthService.login(values)
+                .then((response) => {
+                  if (response.success) {
+                    sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/westminster.png');
+                    sessionStorage.setItem('loggedUser', values.email);
+                    sessionStorage.setItem('userId', response.user.staffId);
+                    sessionStorage.setItem('name', response.user.name);
+                    sessionStorage.setItem('loggedUserRole', response.user.userType);
+                    sessionStorage.setItem('token', response.user.token);
+
+                    if (response.user.userType === 'TEACHER') {
+                      navigate('/teacher/dashboard', { replace: true });
+                    } else if (response.user.userType === 'ADMIN') {
+                      navigate('/school-admin/dashboard', { replace: true });
+                    } else {
+                      console.log('Account not setup correctly. Please contact Admin');// Send message
+                      navigate('/', { replace: true });
+                    }
+                  } else {
+                    console.log(response.message);// Send message
+                    navigate('/', { replace: true });
+                  }
+                }).catch((error) => {
+                  console.log(error);
+                  navigate('/', { replace: true });
+                });
             }}
           >
             {({

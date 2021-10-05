@@ -11,27 +11,60 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  BarChart as BarChartIcon,
+  Home as HomeIcon,
+  // BarChart as BarChartIcon,
   Lock as LockIcon,
-  Edit as EditIcon
+  Edit as EditIcon,
+  Users as PeopleIcon,
+  // BarChart2 as ResultsIcon,
+  BookOpen as BookOpenIcon,
+  Clipboard as NoticeBoardIcon
 } from 'react-feather';
 
 import NavItem from '../NavItem';
 
+const user = {
+  avatar: sessionStorage.getItem('loggedUserAvatar'),
+  jobTitle: sessionStorage.getItem('loggedUserRole'),
+  name: sessionStorage.getItem('loggedUser')
+};
+
 const items = [
   {
-    href: '/teacher/dashboard',
-    icon: BarChartIcon,
+    href: '/school-admin/dashboard',
+    icon: HomeIcon,
     title: 'Home'
-  }
-];
-
-const quickAccess = [
+  },
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: BarChartIcon,
+  //   title: 'Reports'
+  // },
   {
-    href: '/teacher/classes',
+    href: '/school-admin/subjects',
     icon: EditIcon,
-    title: 'Create Class'
-  }
+    title: 'Subjects'
+  },
+  {
+    href: '/school-admin/classes',
+    icon: BookOpenIcon,
+    title: 'Classes'
+  },
+  {
+    href: '/school-admin/students',
+    icon: PeopleIcon,
+    title: 'Students'
+  },
+  {
+    href: '/school-admin/notices',
+    icon: NoticeBoardIcon,
+    title: 'Notices'
+  },
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: ResultsIcon,
+  //   title: 'Configured Grades'
+  // }
 ];
 
 const login = {
@@ -42,11 +75,6 @@ const login = {
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
-  const user = {
-    avatar: sessionStorage.getItem('loggedUserAvatar'),
-    jobTitle: sessionStorage.getItem('loggedUserRole'),
-    name: sessionStorage.getItem('name')
-  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -78,7 +106,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/teacher/dasshboard"
+          to="/school-admin/dashboard"
         />
         <Typography
           color="textPrimary"
@@ -111,14 +139,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             Quick Access
           </h4>
           <br />
-          {quickAccess.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
           <NavItem
             href={login.href}
             key={login.title}

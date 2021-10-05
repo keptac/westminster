@@ -9,7 +9,7 @@ import NoticeBoard from 'src/components/NoticeBoard';
 import SubjectCard from 'src/components/teacher/subject/SubjectCard';
 import React from 'react';
 
-import StudentServices from '../../services/teacher';
+import TeacherServices from '../../services/teacher';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -19,55 +19,13 @@ class Dashboard extends React.Component {
     };
   }
 
-  // getAssignments = () => {
-  //   StudentService.getAssignments(this.state.assignment.classId)
-  //     .then((response) => {
-  //       this.setState({ assignments: response }, () => {
-  //         let pages = [];
-  //         let perPage = 5;
-  //         const totalPageCount = Math.ceil(
-  //           this.state.assignments.length / perPage
-  //         );
-
-  //         for (var i = 1; i <= totalPageCount; i++) {
-  //           pages.push(i);
-  //         }
-
-  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
-  //           currentPageNumber: this.state.currentPageNumber,
-  //           perPage,
-  //         });
-  //         this.setState({ pages, assignments_ });
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       M.toast({
-  //         html: "Failed to find assignment folder",
-  //         classes: "red accent-2",
-  //       });
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
-    // this.getDashData();
-
-    this.setState({
-      subjectData: [
-        {
-          subjectName: 'Mathematics', subjectCode: 'SUB123', class: 'Four', studentCount: 5, classId: 'CLM123', level: 'GCSE', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
-        },
-        {
-          subjectName: 'Mathematics', subjectCode: 'SUB124', class: 'Two', studentCount: 15, classId: 'CLM124', level: 'AS', teacherId: '', teacherName: '', media: '/static/images/products/product_1.png'
-        }
-      ]
-    });
+    this.getDashData();
   }
 
   getDashData() {
-    // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+    const userId = sessionStorage.getItem('userId');
+    TeacherServices.getTeacherClasses(userId) // Get all subjects for student
       .then((response) => {
         this.setState({ subjectData: response });
       });
@@ -82,7 +40,7 @@ class Dashboard extends React.Component {
         </Helmet>
         <Box
           sx={{
-            backgroundColor: 'background.default',
+            // backgroundColor: 'background.default',
             minHeight: '100%',
             py: 3
           }}
@@ -108,7 +66,7 @@ class Dashboard extends React.Component {
                   {subjectData.map((resource) => (
                     <Grid
                       item
-                      key={resource.id}
+                      key={resource.subjectCode}
                       lg={6}
                       md={6}
                       xs={12}

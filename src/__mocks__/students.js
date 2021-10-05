@@ -1,22 +1,11 @@
-export default [
-  {
-    studentId: 'STUD123',
-    mark: 95,
-    createdAt: 1555016400000,
-    firstName: 'Kelvin',
-    surname: 'Chelenje',
-    grade: 'A',
-    comment: 'the quick brown fox jumped',
-    avatarUrl: '/static/images/avatars/avatar_3.png',
-  },
-  {
-    studentId: 'STUD124',
-    mark: 95,
-    createdAt: 1555016400000,
-    firstName: 'Keith',
-    surname: 'Chelenje',
-    grade: 'A',
-    comment: 'the quick brown fox jumped',
-    avatarUrl: '/static/images/avatars/avatar_3.png',
-  }
-];
+/* eslint-disable import/no-mutable-exports */
+import TeacherServices from 'src/services/teacher';
+
+let students = [];
+
+TeacherServices.getStudentsPerClass('CLC001')
+  .then((response) => {
+    students = response;
+  });
+
+export default students;

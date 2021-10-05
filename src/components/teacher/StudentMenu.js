@@ -15,17 +15,17 @@ const menuItems = [
   {
     id: uuid(),
     name: 'Resources',
-    imageUrl: '/static/images/resources/mtgs.png',
+    imageUrl: '/static/images/resources/westminster.png',
   },
   {
     id: uuid(),
     name: 'Homeworks',
-    imageUrl: '/static/images/resources/mtgs.png',
+    imageUrl: '/static/images/resources/westminster.png',
   },
   {
     id: uuid(),
     name: 'Tests',
-    imageUrl: '/static/images/resources/mtgs.png',
+    imageUrl: '/static/images/resources/westminster.png',
   }
 ];
 

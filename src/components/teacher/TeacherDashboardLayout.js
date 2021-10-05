@@ -4,7 +4,7 @@ import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from '../DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
-const StudentDashboardLayoutRoot = experimentalStyled('div')(
+const TeacherDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -14,7 +14,7 @@ const StudentDashboardLayoutRoot = experimentalStyled('div')(
   })
 );
 
-const StudentDashboardLayoutWrapper = experimentalStyled('div')(
+const TeacherDashboardLayoutWrapper = experimentalStyled('div')(
   ({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',
@@ -26,37 +26,37 @@ const StudentDashboardLayoutWrapper = experimentalStyled('div')(
   })
 );
 
-const StudentDashboardLayoutContainer = experimentalStyled('div')({
+const TeacherDashboardLayoutContainer = experimentalStyled('div')({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden'
 });
 
-const StudentDashboardLayoutContent = experimentalStyled('div')({
+const TeacherDashboardLayoutContent = experimentalStyled('div')({
   flex: '1 1 auto',
   height: '100%',
   overflow: 'auto'
 });
 
-const StudentDashboardLayout = () => {
+const TeacherDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <StudentDashboardLayoutRoot>
+    <TeacherDashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <DashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
-      <StudentDashboardLayoutWrapper>
-        <StudentDashboardLayoutContainer>
-          <StudentDashboardLayoutContent>
+      <TeacherDashboardLayoutWrapper>
+        <TeacherDashboardLayoutContainer>
+          <TeacherDashboardLayoutContent>
             <Outlet />
-          </StudentDashboardLayoutContent>
-        </StudentDashboardLayoutContainer>
-      </StudentDashboardLayoutWrapper>
-    </StudentDashboardLayoutRoot>
+          </TeacherDashboardLayoutContent>
+        </TeacherDashboardLayoutContainer>
+      </TeacherDashboardLayoutWrapper>
+    </TeacherDashboardLayoutRoot>
   );
 };
 
-export default StudentDashboardLayout;
+export default TeacherDashboardLayout;
