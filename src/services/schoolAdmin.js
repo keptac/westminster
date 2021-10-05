@@ -3,8 +3,8 @@ import qs from 'qs';
 
 import fileDownload from 'js-file-download';
 
-const deploymentUrl = 'http://localhost:3001';
-// const deploymentUrl = 'https://westminster-backend.herokuapp.com';
+// const deploymentUrl = 'http://localhost:3001';
+const deploymentUrl = 'https://westminster-backend.herokuapp.com';
 
 async function postClasses(data) {
   const config = {
