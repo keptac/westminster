@@ -1,11 +1,15 @@
 import axios from 'axios';
 import qs from 'qs';
+// import { saveAs } from 'file-saver';
+import fileDownload from 'js-file-download';
 
-const downloadsFolder = require('downloads-folder');
+// const deploymentUrl = 'http://localhost:3001';
+const deploymentUrl = 'https://westminster-backend.herokuapp.com';
+
 // Submissions
 async function postClasses(data) {
   const config = {
-    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -21,7 +25,7 @@ async function postClasses(data) {
 
 async function postNewStudent(data) {
   const config = {
-    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -38,7 +42,7 @@ async function postNewStudent(data) {
 async function getAllStudents() {
   const config = {
     method: 'get',
-    url: 'https://westminster-backend.herokuapp.com/api/westminster/students',
+    url: `${deploymentUrl}/api/westminster/students`,
     headers: { }
   };
 
@@ -52,7 +56,7 @@ async function getAllStudents() {
 
 async function postSubject(data) {
   const config = {
-    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -69,7 +73,7 @@ async function postSubject(data) {
 async function getAllClasses() {
   const config = {
     method: 'get',
-    url: 'https://westminster-backend.herokuapp.com/api/westminster/class',
+    url: `${deploymentUrl}/api/westminster/class`,
     headers: { }
   };
 
@@ -84,7 +88,7 @@ async function getAllClasses() {
 async function getAllSubjects() {
   const config = {
     method: 'get',
-    url: 'https://westminster-backend.herokuapp.com/api/westminster/subjects',
+    url: `${deploymentUrl}/api/westminster/subjects`,
     headers: { }
   };
 
@@ -99,7 +103,7 @@ async function getAllSubjects() {
 async function getAllTeachers() {
   const config = {
     method: 'get',
-    url: 'https://westminster-backend.herokuapp.com/api/westminster/staffType/Teacher',
+    url: `${deploymentUrl}/api/westminster/staffType/Teacher`,
     headers: { }
   };
 
@@ -113,7 +117,7 @@ async function getAllTeachers() {
 
 async function postAnnouncement(data) {
   const config = {
-    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    baseURL: `${deploymentUrl}/api/westminster`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
@@ -130,7 +134,7 @@ async function postAnnouncement(data) {
 async function getAllNotices() {
   const config = {
     method: 'get',
-    url: 'https://westminster-backend.herokuapp.com/api/westminster/announcements',
+    url: `${deploymentUrl}/api/westminster/announcements`,
     headers: { }
   };
 
@@ -143,16 +147,33 @@ async function getAllNotices() {
 }
 
 async function downloadReports() {
-  const path = downloadsFolder();
-
   const config = {
     method: 'get',
-    url: `http://localhost/api/westminster/studentMarks/reportgeneration/${path}`,
-    headers: { }
+    url: `${deploymentUrl}/api/westminster/studentMarks/reportgeneration`,
+    headers: { 'Content-Type': 'application/pdf' }
   };
 
   return axios(config)
-    .then((response) => response.data)
+    .then((response) => {
+      if (response.data.reportsGenerated > 0) {
+        console.log(response.data.files);
+        response.data.files.forEach((file) => {
+          axios.get(deploymentUrl + file.reportPath, {
+            responseType: 'blob',
+          })
+            .then((res) => {
+              fileDownload(res.data, `${file.studentName}.pdf`);
+            });
+
+          // saveAs(
+          //   deploymentUrl + file.reportPath,
+          //   `${file.studentName}.pdf`,
+          // );
+        });
+        return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
+      }
+      return { success: false, message: 'Reports not found' };
+    })
     .catch((error) => {
       console.log(error);
       return [];

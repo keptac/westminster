@@ -60,7 +60,11 @@ class AdminDashboard extends React.Component {
     SchoolAdminServices.downloadReports()
       .then((response) => {
         console.log(response);
-        this.setState({ downloaded: true });
+        if (response.success) {
+          this.setState({ downloaded: true });
+        } else {
+          this.setState({ downloaded: false });
+        }
       });
   }
 
