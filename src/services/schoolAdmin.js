@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-// import { saveAs } from 'file-saver';
+
 import fileDownload from 'js-file-download';
 
 // const deploymentUrl = 'http://localhost:3001';
@@ -158,17 +158,12 @@ async function downloadReports() {
       if (response.data.reportsGenerated > 0) {
         console.log(response.data.files);
         response.data.files.forEach((file) => {
-          axios.get(deploymentUrl + file.reportPath, {
+          axios.get(`${deploymentUrl}/${file.reportPath}`, {
             responseType: 'blob',
           })
             .then((res) => {
               fileDownload(res.data, `${file.studentName}.pdf`);
             });
-
-          // saveAs(
-          //   deploymentUrl + file.reportPath,
-          //   `${file.studentName}.pdf`,
-          // );
         });
         return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
       }
