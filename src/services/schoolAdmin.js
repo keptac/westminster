@@ -17,6 +17,22 @@ async function postClasses(data) {
   }
 }
 
+async function postSubject(data) {
+  const config = {
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/subjects', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 async function getAllClasses() {
   const config = {
     method: 'get',
@@ -82,7 +98,8 @@ const AdminServices = {
   getAllClasses,
   getAllSubjects,
   getAllTeachers,
-  getAllNotices
+  getAllNotices,
+  postSubject
 };
 
 export default AdminServices;
