@@ -1,5 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
+
+const downloadsFolder = require('downloads-folder');
 // Submissions
 async function postClasses(data) {
   const config = {
@@ -109,10 +111,43 @@ async function getAllTeachers() {
     });
 }
 
+async function postAnnouncement(data) {
+  const config = {
+    baseURL: 'https://westminster-backend.herokuapp.com/api/westminster',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/announcements', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 async function getAllNotices() {
   const config = {
     method: 'get',
     url: 'https://westminster-backend.herokuapp.com/api/westminster/announcements',
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function downloadReports() {
+  const path = downloadsFolder();
+
+  const config = {
+    method: 'get',
+    url: `http://localhost/api/westminster/studentMarks/reportgeneration/${path}`,
     headers: { }
   };
 
@@ -132,7 +167,9 @@ const AdminServices = {
   getAllNotices,
   postSubject,
   postNewStudent,
-  getAllStudents
+  getAllStudents,
+  downloadReports,
+  postAnnouncement
 };
 
 export default AdminServices;

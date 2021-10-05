@@ -28,6 +28,7 @@ class AdminDashboard extends React.Component {
     this.state = {
       subjectData: [],
       reportData: [],
+      downloaded: false
     };
   }
 
@@ -55,8 +56,16 @@ class AdminDashboard extends React.Component {
       });
   }
 
+  downloadReports() {
+    SchoolAdminServices.downloadReports()
+      .then((response) => {
+        console.log(response);
+        this.setState({ downloaded: true });
+      });
+  }
+
   render() {
-    const { subjectData, reportData } = this.state;
+    const { subjectData, reportData, downloaded } = this.state;
     return (
       <>
         <Helmet>
@@ -122,7 +131,9 @@ class AdminDashboard extends React.Component {
                                 justifyContent: 'flex-start'
                               }}
                             >
-                              <Button sx={{ mx: 1 }}>
+                              <Button
+                                sx={{ mx: 1 }}
+                              >
                                 Current weeks reports will be complete by 01 October 2021
                               </Button>
                             </Box>
@@ -142,8 +153,9 @@ class AdminDashboard extends React.Component {
                               <Button
                                 color="primary"
                                 variant="contained"
+                                onClick={() => this.downloadReports()}
                               >
-                                Generate Weekly Reports
+                                {downloaded ? 'Download Successful Check Downloads' : 'Generate Weekly Reports'}
                               </Button>
                             </Box>
                           </Grid>
