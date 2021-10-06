@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { Helmet } from 'react-helmet';
 // import { withAlert, positions } from 'react-alert';
 
@@ -59,21 +60,15 @@ class AdminDashboard extends React.Component {
   }
 
   downloadReports() {
-    // const {alert} = this.props;
-
     SchoolAdminServices.downloadReports()
       .then((response) => {
         console.log(response);
         if (response.success) {
-          // alert.info('Download started please check your downloads folder.', { position: positions.MIDDLE }, {
-          //   timeout: 2000,
-          // });
           this.setState({ downloaded: true });
+          alert(`Success: ${response.message}`);
         } else {
           this.setState({ downloaded: false });
-          // alert.error(response.message, { position: positions.MIDDLE }, {
-          //   timeout: 2000,
-          // });
+          alert(`Error: ${response.message}`);
         }
       });
   }
