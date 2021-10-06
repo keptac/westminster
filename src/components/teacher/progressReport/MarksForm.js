@@ -36,9 +36,9 @@ const MarksForm = ({ studentName }, props) => {
       } else if (event.target.value >= 50 && event.target.value < 60) {
         comment = 'You can do better with more focus and hard work';
       } else if (event.target.value >= 60 && event.target.value < 70) {
-        comment = 'Good work, keep on pushing';
+        comment = 'Good work, keep on pushing!';
       } else if (event.target.value >= 70 && event.target.value < 80) {
-        comment = 'Good results.';
+        comment = 'Good results. There is more for you to achieve.';
       } else {
         comment = 'Excellent work. Keep it up with consistency!';
       }
