@@ -1,3 +1,4 @@
+import { useAlert, positions } from 'react-alert';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -17,6 +18,8 @@ const Login = () => {
   const navigate = useNavigate();
   sessionStorage.clear();
   localStorage.clear();
+  const alert = useAlert();
+
   return (
     <>
       <Helmet>
@@ -72,16 +75,39 @@ const Login = () => {
                     } else if (response.user.userType === 'ADMIN') {
                       navigate('/school-admin/dashboard', { replace: true });
                     } else {
-                      console.log('Account not setup correctly. Please contact Admin');// Send message
-                      navigate('/', { replace: true });
+                      alert.show('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
+                        timeout: 2000,
+                        type: 'error',
+                        onOpen: () => {
+                          console.log('hey');
+                        },
+                        onClose: () => {
+                          navigate('/', { replace: true });
+                        }
+                      });
                     }
                   } else {
-                    console.log(response.message);// Send message
-                    navigate('/', { replace: true });
+                    alert.error(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response);
+                      },
+                      onClose: () => {
+                        navigate('/', { replace: true });
+                      }
+                    });
                   }
                 }).catch((error) => {
-                  console.log(error);
-                  navigate('/', { replace: true });
+                  alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
+                    timeout: 2000,
+                    type: 'error',
+                    onOpen: () => {
+                      console.log(error);
+                    },
+                    onClose: () => {
+                      navigate('/', { replace: true });
+                    }
+                  });
                 });
             }}
           >
