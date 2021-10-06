@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useAlert, positions } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -14,6 +16,9 @@ import {
 import TeacherServices from 'src/services/teacher';
 
 const MarksForm = ({ studentName }, props) => {
+  const alert = useAlert();
+  const navigate = useNavigate();
+
   const [values, setValues] = useState({
     mark: 0,
     comment: '',
@@ -37,12 +42,15 @@ const MarksForm = ({ studentName }, props) => {
 
   const handleSubmit = () => {
     const studentRecord = JSON.parse(localStorage.getItem('studentRecord'));
+    const subjectRecord = JSON.parse(localStorage.getItem('subjectRecord'));
+    // var
+    // if(values.mark<)
     const data = {
       firstName: studentRecord.name,
       surname: studentRecord.surname,
       studentId: studentRecord.studentId,
-      subjectCode: 'SUB001',
-      subject: 'Subject Test',
+      subjectCode: subjectRecord.subjectCode,
+      subject: subjectRecord.SubjectName,
       classId: studentRecord.classId,
       mark: values.mark,
       grade: 'B',
@@ -58,8 +66,26 @@ const MarksForm = ({ studentName }, props) => {
           mark: 0,
           comment: ''
         });
+
+        alert.info(response.message, { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(response);
+          },
+          onClose: () => {
+            navigate('/teacher/report/', { replace: true });
+          }
+        });
       }).catch((error) => {
-        console.log(error);
+        alert.info('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(error);
+          },
+          onClose: () => {
+            navigate('/teacher/report/', { replace: true });
+          }
+        });
       });
   };
 

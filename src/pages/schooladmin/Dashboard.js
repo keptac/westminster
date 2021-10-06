@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+// import { withAlert, positions } from 'react-alert';
+
 import {
   Box,
   Container,
@@ -57,19 +59,29 @@ class AdminDashboard extends React.Component {
   }
 
   downloadReports() {
+    // const {alert} = this.props;
+
     SchoolAdminServices.downloadReports()
       .then((response) => {
         console.log(response);
         if (response.success) {
+          // alert.info('Download started please check your downloads folder.', { position: positions.MIDDLE }, {
+          //   timeout: 2000,
+          // });
           this.setState({ downloaded: true });
         } else {
           this.setState({ downloaded: false });
+          // alert.error(response.message, { position: positions.MIDDLE }, {
+          //   timeout: 2000,
+          // });
         }
       });
   }
 
   render() {
-    const { subjectData, reportData, downloaded } = this.state;
+    const {
+      subjectData, reportData, downloaded
+    } = this.state;
     return (
       <>
         <Helmet>
@@ -157,7 +169,9 @@ class AdminDashboard extends React.Component {
                               <Button
                                 color="primary"
                                 variant="contained"
-                                onClick={() => this.downloadReports()}
+                                onClick={() => {
+                                  this.downloadReports();
+                                }}
                               >
                                 {downloaded ? 'Download Successful Check Downloads' : 'Generate Weekly Reports'}
                               </Button>

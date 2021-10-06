@@ -75,9 +75,8 @@ const Login = () => {
                     } else if (response.user.userType === 'ADMIN') {
                       navigate('/school-admin/dashboard', { replace: true });
                     } else {
-                      alert.show('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
+                      alert.error('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
                         timeout: 2000,
-                        type: 'error',
                         onOpen: () => {
                           console.log('hey');
                         },

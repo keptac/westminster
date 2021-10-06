@@ -1,5 +1,7 @@
 /* eslint-disable prefer-const */
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAlert, positions } from 'react-alert';
 
 import {
   Box, Grid,
@@ -14,6 +16,8 @@ import {
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 const AddClassForm = () => {
+  const alert = useAlert();
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     className: null,
   });
@@ -35,9 +39,25 @@ const AddClassForm = () => {
 
     SchoolAdminServices.postClasses(data)
       .then((response) => {
-        console.log(response);
+        alert.info(response.message, { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            navigate('/school-admin/classes', { replace: true });
+          },
+          onClose: () => {
+            console.log(response);
+          }
+        });
       }).catch((error) => {
-        console.log(error);
+        alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(error);
+          },
+          onClose: () => {
+            navigate('/school-admin/classes', { replace: true });
+          }
+        });
       });
   };
 
