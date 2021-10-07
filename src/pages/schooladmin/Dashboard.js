@@ -1,5 +1,8 @@
 /* eslint-disable no-alert */
 import { Helmet } from 'react-helmet';
+import { jsPDF as JsPdf } from 'jspdf';
+import * as html2canvas from 'html2canvas';
+
 // import { withAlert, positions } from 'react-alert';
 
 import {
@@ -23,6 +26,7 @@ import DashboardCard from 'src/components/schoolAdmin/DashboardCard';
 import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
+// import StudentReport from 'src/components/reportTemplate';
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 class AdminDashboard extends React.Component {
@@ -89,19 +93,35 @@ class AdminDashboard extends React.Component {
       students.forEach((student) => {
         SchoolAdminServices.getStudentReport(student.studentId)
           .then((response) => {
+            console.log('Processinf');
             if (response.success) {
               console.log(response.marks);
-              // Do Created files
+              const htmlString = '<div id="capture"><h4> Hello Test Frames</h4></div>';
+              const iframe = document.createElement('iframe');
+              document.body.appendChild(iframe);
+              const iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+              iframedoc.body.innerHTML = htmlString;
+              html2canvas(iframedoc.body)
+                .then((canvas) => {
+                  const imgData = canvas.toDataURL('image/png');
+                  const pdf = JsPdf('l');
+                  pdf.addImage(imgData, 'PNG', 0, 0);
+                  pdf.save(`${student.surname} ${student.name} ${student.studentId}.pdf`);
+                  document.body.removeChild(iframe);
+                });
             } else {
               failedCount++;
               console.log(`${response.error} --> ${student.firstName} ${student.surname} ${student.studentid}`);
               // Send back to backend to log failed records.
             }
+            if (count + failedCount >= students.length) {
+              console.log('Processed');
+              this.setState({ downloaded: true });
+              alert(`${count} Reports generated successfully. Kindly check your downloads folder. \n\n${failedCount} Failed`);
+            }
           });
         count++;
       });
-      this.setState({ downloaded: true });
-      alert(`${count} Reports generated successfully. Kindly check your downloads folder. \n\n${failedCount} Failed`);
     } else {
       alert('No reports have been submitted for processing. Kindly request teachers to submit reports');
     }
@@ -195,6 +215,7 @@ class AdminDashboard extends React.Component {
                                 justifyContent: 'flex-end'
                               }}
                             >
+                              {/* <StudentReport studentResults={students} /> */}
                               {downloaded
                                 ? (
                                   <Button
