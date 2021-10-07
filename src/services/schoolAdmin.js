@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import fileDownload from 'js-file-download';
+// import fileDownload from 'js-file-download';
 
 // const deploymentUrl = 'http://localhost:3001';
 const deploymentUrl = 'https://westminster-backend.herokuapp.com';
@@ -145,34 +145,64 @@ async function getAllNotices() {
     });
 }
 
-async function downloadReports() {
+async function getTeacherSubmissions() {
   const config = {
     method: 'get',
-    url: `${deploymentUrl}/api/westminster/studentMarks/reportgeneration`,
-    headers: { 'Content-Type': 'application/pdf', }
+    url: `${deploymentUrl}/api/westminster/reportsubmissions`,
+    headers: {}
   };
 
   return axios(config)
-    .then((response) => {
-      if (response.data.reportsGenerated > 0) {
-        console.log(response.data.files);
-        response.data.files.forEach((file) => {
-          axios.get(`${deploymentUrl}/${file.reportPath}`, {
-            responseType: 'blob',
-          })
-            .then((res) => {
-              fileDownload(res.data, `${file.studentName}.pdf`);
-            });
-        });
-        return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
-      }
-      return { success: false, message: 'Reports not found' };
-    })
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error);
       return [];
     });
 }
+
+async function getStudentReport(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/westminster/studentMarks/student/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+// async function downloadReports() {
+//   const config = {
+//     method: 'get',
+//     url: `${deploymentUrl}/api/westminster/studentMarks/reportgeneration`,
+//     headers: { 'Content-Type': 'application/pdf', }
+//   };
+
+//   return axios(config)
+//     .then((response) => {
+//       if (response.data.reportsGenerated > 0) {
+//         console.log(response.data.files);
+//         response.data.files.forEach((file) => {
+//           axios.get(`${deploymentUrl}/${file.reportPath}`, {
+//             responseType: 'blob',
+//           })
+//             .then((res) => {
+//               fileDownload(res.data, `${file.studentName}.pdf`);
+//             });
+//         });
+//         return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
+//       }
+//       return { success: false, message: 'Reports not found' };
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       return [];
+//     });
+// }
 
 const AdminServices = {
   postClasses,
@@ -183,8 +213,10 @@ const AdminServices = {
   postSubject,
   postNewStudent,
   getAllStudents,
-  downloadReports,
-  postAnnouncement
+  // downloadReports,
+  postAnnouncement,
+  getTeacherSubmissions,
+  getStudentReport
 };
 
 export default AdminServices;

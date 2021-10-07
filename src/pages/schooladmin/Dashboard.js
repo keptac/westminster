@@ -31,12 +31,34 @@ class AdminDashboard extends React.Component {
     this.state = {
       subjectData: [],
       reportData: [],
-      downloaded: false
+      downloaded: false,
+      marksResults: [],
+      students: []
     };
   }
 
   componentDidMount() {
     this.getDashData();
+    this.getTeacherSubmissions();
+    this.getStudents();
+  }
+
+  async getTeacherSubmissions() {
+    SchoolAdminServices.getTeacherSubmissions()
+      .then((response) => {
+        this.setState({ marksResults: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async getStudents() {
+    SchoolAdminServices.getAllStudents()
+      .then((response) => {
+        this.setState({ students: response });
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   getDashData() {
@@ -60,17 +82,29 @@ class AdminDashboard extends React.Component {
   }
 
   downloadReports() {
-    SchoolAdminServices.downloadReports()
-      .then((response) => {
-        console.log(response);
-        if (response.success) {
-          this.setState({ downloaded: true });
-          alert(`Success: ${response.message}`);
-        } else {
-          this.setState({ downloaded: false });
-          alert(`Error: ${response.message}`);
-        }
+    const { marksResults, students } = this.state;
+    let count = 0;
+    let failedCount = 0;
+    if (marksResults.length > 0) {
+      students.forEach((student) => {
+        SchoolAdminServices.getStudentReport(student.studentId)
+          .then((response) => {
+            if (response.success) {
+              console.log(response.marks);
+              // Do Created files
+            } else {
+              failedCount++;
+              console.log(`${response.error} --> ${student.firstName} ${student.surname} ${student.studentid}`);
+              // Send back to backend to log failed records.
+            }
+          });
+        count++;
       });
+      this.setState({ downloaded: true });
+      alert(`${count} Reports generated successfully. Kindly check your downloads folder. \n\n${failedCount} Failed`);
+    } else {
+      alert('No reports have been submitted for processing. Kindly request teachers to submit reports');
+    }
   }
 
   render() {
@@ -161,15 +195,26 @@ class AdminDashboard extends React.Component {
                                 justifyContent: 'flex-end'
                               }}
                             >
-                              <Button
-                                color="primary"
-                                variant="contained"
-                                onClick={() => {
-                                  this.downloadReports();
-                                }}
-                              >
-                                {downloaded ? 'Download Successful Check Downloads' : 'Generate Weekly Reports'}
-                              </Button>
+                              {downloaded
+                                ? (
+                                  <Button
+                                    color="primary"
+                                    variant="contained"
+                                  >
+                                    Download Successful Check Downloads
+                                  </Button>
+                                )
+                                : (
+                                  <Button
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={() => {
+                                      this.downloadReports();
+                                    }}
+                                  >
+                                    Generate Weekly Reports
+                                  </Button>
+                                )}
                             </Box>
                           </Grid>
                         </Grid>
