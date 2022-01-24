@@ -1,4 +1,5 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAlert, positions } from 'react-alert';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -13,6 +14,7 @@ import {
 import AuthService from 'src/services/authServices';
 
 const Register = () => {
+  const alert = useAlert();
   const navigate = useNavigate();
   return (
     <>
@@ -53,13 +55,36 @@ const Register = () => {
                 .then((response) => {
                   console.log(response);
                   if (response.success) {
-                    navigate('/login', { replace: true });
+                    alert.success(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response);
+                      },
+                      onClose: () => {
+                        navigate('/login', { replace: true });
+                      }
+                    });
                   } else {
-                    navigate('/register', { replace: true });
-                    console.log(response.message);
+                    alert.error(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response.error);
+                      },
+                      onClose: () => {
+                        navigate('/register', { replace: true });
+                      }
+                    });
                   }
                 }).catch((error) => {
-                  console.log(error);
+                  alert.error('An error occured. Please contact Admin', { position: positions.MIDDLE }, {
+                    timeout: 2000,
+                    onOpen: () => {
+                      console.log(error);
+                    },
+                    onClose: () => {
+                      navigate('/', { replace: true });
+                    }
+                  });
                 });
             }}
           >

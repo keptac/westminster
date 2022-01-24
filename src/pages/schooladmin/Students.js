@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
@@ -99,6 +100,7 @@ class AddTeacherClass extends React.Component {
     AdminServices.postNewStudent(data)
       .then((response) => {
         console.log(response); // Add alert
+        alert('Success. Refresh your the page to update students.');
       }).catch((error) => {
         console.log(error);
       });

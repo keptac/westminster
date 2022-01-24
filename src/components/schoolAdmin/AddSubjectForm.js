@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAlert, positions } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box, Grid,
@@ -17,6 +19,9 @@ import {
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 const AddSubjectForm = () => {
+  const alert = useAlert();
+  const navigate = useNavigate();
+
   const [level, setLevel] = useState('');
 
   const [values, setValues] = useState({
@@ -45,9 +50,26 @@ const AddSubjectForm = () => {
 
     SchoolAdminServices.postSubject(data)
       .then((response) => {
-        console.log(response);
+        alert.info(response.message, { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(response);
+          },
+          onClose: () => {
+            navigate('/school-admin/subjects/', { replace: true });
+          }
+        });
       }).catch((error) => {
-        console.log(error);
+        console.log();
+        alert.error('Oh snap, an error occured.', { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(error);
+          },
+          onClose: () => {
+            navigate('/school-admin/subjects/', { replace: true });
+          }
+        });
       });
   };
 
@@ -106,7 +128,7 @@ const AddSubjectForm = () => {
                         required
                         variant="outlined"
                       >
-                        <MenuItem value="GCSE">GCSE</MenuItem>
+                        <MenuItem value="GCSE">O Level</MenuItem>
                         <MenuItem value="AS Level">AS Level</MenuItem>
                         <MenuItem value="A Level">A Level</MenuItem>
                       </Select>
