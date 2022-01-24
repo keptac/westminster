@@ -1,4 +1,6 @@
+/* eslint-disable no-alert */
 /* eslint-disable prefer-const */
+
 import { Helmet } from 'react-helmet';
 // import { useState } from 'react';
 import React from 'react';
@@ -82,11 +84,11 @@ class ProgressReport extends React.Component {
 
   async handleReportSubmission() {
     const classData = JSON.parse(localStorage.getItem('recordingSubject'));
-    const { students } = this.state;
+    const { students, marksResults } = this.state;
     const userId = sessionStorage.getItem('userId');
     const teacherName = sessionStorage.getItem('name');
 
-    if (students.length > 0) {
+    if (students.length > 0 && marksResults.length > 0) {
       const data = {
         className: classData.className,
         subject: classData.subjectCode,
@@ -99,12 +101,13 @@ class ProgressReport extends React.Component {
       TeacherServices.submitReports(data)
         .then((response) => {
           console.log(response);
+          alert('Results successfully submitted for reporting');
           this.setState({ reportsSubmitted: true });
         }).catch((error) => {
           console.log(error);
         });
     } else {
-      alert('Hello');
+      alert('No results available for submission. Please add students results.');
     }
   }
 

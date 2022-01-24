@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAlert, positions } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box, Grid,
@@ -12,6 +14,8 @@ import {
 import AdminServices from 'src/services/schoolAdmin';
 
 const AddNoticeForm = () => {
+  const alert = useAlert();
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     noticeBody: null,
     noticeTitle: null,
@@ -32,9 +36,26 @@ const AddNoticeForm = () => {
 
     AdminServices.postAnnouncement(data)
       .then((response) => {
-        console.log(response); // Add alert
+        alert.info(response.message, { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(response);
+          },
+          onClose: () => {
+            navigate('/school-admin/notices/', { replace: true });
+          }
+        });
       }).catch((error) => {
         console.log(error);
+        alert.error('Snap, an error occured. Please contact the admin.', { position: positions.MIDDLE }, {
+          timeout: 2000,
+          onOpen: () => {
+            console.log(error);
+          },
+          onClose: () => {
+            navigate('/school-admin/notices/', { replace: true });
+          }
+        });
       });
     // Pass to api
   };

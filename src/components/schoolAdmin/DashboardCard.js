@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 // import Visibility from '@material-ui/icons/Visibility';
 
-const DashboardCard = ({ resource, ...rest }) => {
+const DashboardCard = ({ resource }) => {
   // const navigate = useNavigate();
   const value = '';
 
@@ -25,7 +25,7 @@ const DashboardCard = ({ resource, ...rest }) => {
         borderRadius: '10px',
         elevation: '10px'
       }}
-      {...rest}
+      // {...rest}
     >
       <CardContent>
         <Typography

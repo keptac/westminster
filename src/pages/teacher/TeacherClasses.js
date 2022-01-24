@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
@@ -78,13 +79,12 @@ class AddTeacherClass extends React.Component {
       teacherName
     };
 
-    console.log('Saving sata');
-
     teacherClasses.push(data);
 
     TeacherServices.addTeacherClass(data)
       .then((response) => {
         console.log(response); // Add alert
+        alert('Success. Refresh your the page to load classes.');
       }).catch((error) => {
         console.log(error);
       });
